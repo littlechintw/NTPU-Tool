@@ -16,11 +16,19 @@ Vue.component('qr-code', VueQRCodeComponent)
 import VueBarcode from 'vue-barcode'
 Vue.component('barcode', VueBarcode)
 
-//cookies
+// cookies
 import VueCookie from 'vue-cookie'
 Vue.use(VueCookie)
 
 Vue.use(Vuetify)
+
+// GA
+import VueAnalytics from 'vue-analytics'
+Vue.use(VueAnalytics, {
+  id: 'G-WH273PERH1',
+  router,
+  checkDuplicatedScript: true
+})
 
 new Vue({
   router,
