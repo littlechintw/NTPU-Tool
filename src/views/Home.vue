@@ -8,7 +8,8 @@
               <v-form ref="form" v-model="valid" lazy-validation>
                 <v-text-field v-model="id" :rules="idRules" type="number" label="學號" required></v-text-field>
                 <v-checkbox v-model="checkbox_self" :rules="[v => !!v || 'You must agree to continue!']" label="確定這個學號是自己的嗎？" required></v-checkbox>
-                <v-checkbox v-model="checkbox_law" :rules="[v => !!v || 'You must agree to continue!']" label="同意免責條款" required></v-checkbox>
+                <v-checkbox v-model="checkbox_law" :rules="[v => !!v || 'You must agree to continue!']" label="同意服務條款" required></v-checkbox>
+                <p style="font-size: 3vw;color: gray;">相關條款可點選右上角問號按鈕查看</p>
                 <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">產生條碼</v-btn>
               </v-form>
             </v-row>
@@ -51,7 +52,7 @@ export default {
     id: '',
     idRules: [
       v => !!v || '請輸入學號',
-      // v => (v && v.length > 0) || 'Name must be less than 10 characters',
+      v => (v && v.length === 9) || '學號必須包含 9 個數字',
     ],
     select: null,
     checkbox_self: false,
