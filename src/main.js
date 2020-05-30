@@ -25,7 +25,7 @@ Vue.use(Vuetify)
 // GA
 import VueAnalytics from 'vue-analytics'
 Vue.use(VueAnalytics, {
-  id: 'G-WH273PERH1',
+  id: 'UA-167881827-1',
   router,
   checkDuplicatedScript: true
 })
