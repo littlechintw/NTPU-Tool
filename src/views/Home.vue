@@ -60,13 +60,10 @@ export default {
     qrcode_show: false,
     form_show: true,
     barcode_option:{
-        displayValue: true,
+        displayValue: false,
         background: '#fff',
-        valid: function (valid) {
-          console.log(valid)
-        },
-        width:'1px',
-        height: '55px',
+        width: '2px',
+        height: '30px',
         fontSize: '10px'
     },
   }),
@@ -76,7 +73,7 @@ export default {
       if(this.$refs.form.validate()){
         this.qrcode_show = true
         this.form_show = false
-        this.$cookie.set('userid', this.id, '30d');
+        this.$cookie.set('userid', this.id, 30);
       }
     },
     reset_form(){
