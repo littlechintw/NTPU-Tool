@@ -76,7 +76,7 @@ export default {
       if(this.$refs.form.validate()){
         this.qrcode_show = true
         this.form_show = false
-        this.$cookie.set('userid', this.id, "30d");
+        this.$cookie.set('userid', this.id, '30d');
       }
     },
     reset_form(){
