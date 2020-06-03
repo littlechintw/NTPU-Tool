@@ -2,8 +2,8 @@
 
 ## Something you have to know
 
-This project just for convenience use, you can not use someone's ID to try to pass the gate. 
-Please carry your student ID!
+- This project just for convenience use, you can not use someone's ID to try to pass the gate. 
+- Please carry your student ID!
 
 ## Try it
 
