@@ -34,8 +34,10 @@
             <p><a href='https://littlechintw.github.io/'>littlechin</a></p>
           </v-row>
           <v-row align="center" justify="center" class="grey lighten-5" length>
-            <div class="warning">
-              <h3>本系統僅作為方便使用，請記得還是要攜帶學生證，如有發生盜用他人學號等情事，本系統不負任何責任，應由當事人自行承擔</h3>
+            <div>
+              <v-btn class="ma-2 white--text" tile color="black" href="https://github.com/littlechintw/NTPU-Tool">
+                <v-icon left>code</v-icon> GitHub
+              </v-btn>
             </div>
           </v-row>
         </v-col>
