@@ -7,7 +7,7 @@ Please carry your student ID!
 
 ## Try it
 
-[https://ntpu-tool/netlify.app](https://ntpu-tool/netlify.app)
+[https://ntpu-tool.netlify.app](https://ntpu-tool/netlify.app)
 
 ## Project setup
 ```
