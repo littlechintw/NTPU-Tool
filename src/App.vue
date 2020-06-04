@@ -21,11 +21,19 @@
     </v-app-bar>
 
     <v-content>
-      <router-view></router-view>
+      <v-container fluid>
+        <v-row>
+          <v-col cols="12">
+            <v-row align="center" justify="center">
+              <router-view></router-view>
+            </v-row>
+          </v-col>
+        </v-row>
+      </v-container>
     </v-content>
     
-    <v-footer absolute class="font-weight-medium">
-      <v-col class="text-center" cols="12" style="font-size: 3vw;">
+    <v-footer padless class="font-weight-medium">
+      <v-col class="text-center" cols="12" style="font-size: 14px;">
         &copy; {{ new Date().getFullYear() }} Copyright <a href='https://littlechintw.github.io'>littlechintw.github.io</a>. All rights reserved.
       </v-col>
     </v-footer>
