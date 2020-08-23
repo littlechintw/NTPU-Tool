@@ -25,36 +25,77 @@
       </v-card>
     </div>
     <div class="qrcode" v-show="qrcode_show">
-      <v-container fluid>
-        <v-row>
-          <v-col cols="12" >
-            <v-row align="center" justify="center" length>
-                <qr-code :text="id"></qr-code>
-            </v-row>
-            <v-row align="center" justify="center" length>
-                <barcode :value="id" :options="barcode_option"></barcode>
-            </v-row>
-            <v-row align="center" justify="center" length>
-                <h3>{{ id }}</h3>
-            </v-row>
-            <v-row align="center" justify="center" length>
-                <v-btn color="success" class="mr-4" @click="reset_form">重新輸入</v-btn>
-            </v-row>
-          </v-col>
-        </v-row>
-      </v-container>
+      <v-card class="mx-auto" width="344" elevation="5">
+        <v-container fluid>
+          <v-row>
+            <v-col cols="12" align="center">
+              <v-row align="center" justify="center" length>
+                  <h1>防疫登入</h1>
+              </v-row>
+              <v-row align="center" justify="center" length>
+                  <br>
+              </v-row>
+              <v-row align="center" justify="center" length>
+                  <qr-code :text="id"></qr-code>
+              </v-row>
+              <v-row align="center" justify="center" length>
+                  <barcode :value="id" :options="barcode_option"></barcode>
+              </v-row>
+              <!-- <v-row align="center" justify="center" length>
+                  <h3>{{ id }}</h3>
+              </v-row> -->
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-card>
+      <br>
+      <v-card class="mx-auto" width="344" elevation="5">
+        <v-container fluid>
+          <v-row>
+            <v-col cols="12" align="center">
+              <v-row align="center" justify="center" length>
+                  <h1>宿舍抽籤資訊</h1>
+              </v-row>
+              <v-row align="center" justify="center" length>
+                  <br>
+              </v-row>
+              <v-row align="center" justify="center" length>
+                  {{ dorm_status }}
+              </v-row>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-card>
+      <br>
+      <v-card class="mx-auto" width="344" elevation="5">
+        <v-container fluid>
+          <v-row>
+            <v-col cols="12" align="center">
+              <v-row align="center" justify="center" length>
+                  <v-btn color="success" class="mr-4" @click="reset_form">重新輸入</v-btn>
+              </v-row>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-card>
     </div>
   </div>
 </template>
 
 <script>
+// import LoginForm from '@/components/LoginForm.vue'
+
 export default {
+  name: 'Home',
+  components: {
+    // LoginForm
+  },
   data: () => ({
     valid: true,
     id: '',
     idRules: [
       v => !!v || '請輸入學號',
-      v => (v && v.length === 9) || '學號必須包含 9 個數字',
+      v => (v && v.length === 9) || '請輸入學號正確格式',
     ],
     select: null,
     checkbox_self: false,
@@ -68,6 +109,7 @@ export default {
         height: '30px',
         fontSize: '10px'
     },
+    dorm_status: '載入中...',
   }),
 
   methods: {
@@ -82,6 +124,20 @@ export default {
       this.qrcode_show = false
       this.form_show = true
       this.$cookie.delete('userid');
+    },
+    get_dorm_status(){
+      console.log("You just sent a request to get dorm status!")
+      let url = 'https://script.google.com/macros/s/AKfycbx2u3o28omyMINdaU8mLZuAd4jWBrciWLxrAkWwdIcFUWWBkoWg/exec'
+      this.$http.post(url, {user_id:this.id})
+      .then((response) => {
+        if(response.body.f == "1")
+          this.dorm_status = "已取得宿舍入住資格"
+        else
+          this.dorm_status = "找不到任何資料"
+      })
+      .catch(() => {
+        console.log('Got some errors!!')
+      })
     }
   },
 
@@ -90,6 +146,7 @@ export default {
       this.id = this.$cookie.get('userid')
       this.qrcode_show = true
       this.form_show = false
+      this.get_dorm_status()
     }
   }
 }

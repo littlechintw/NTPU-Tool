@@ -30,6 +30,10 @@ Vue.use(VueAnalytics, {
   checkDuplicatedScript: true
 })
 
+// Vue-Resource
+import VueResource from 'vue-resource';
+Vue.use(VueResource);
+
 new Vue({
   router,
   vuetify,
