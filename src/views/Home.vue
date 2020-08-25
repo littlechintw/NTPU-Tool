@@ -118,6 +118,7 @@ export default {
         this.qrcode_show = true
         this.form_show = false
         this.$cookie.set('userid', this.id, 30);
+        this.get_dorm_status()
       }
     },
     reset_form(){
@@ -127,15 +128,18 @@ export default {
     },
     get_dorm_status(){
       console.log("You just sent a request to get dorm status!")
-      let url = 'https://script.google.com/macros/s/AKfycbx2u3o28omyMINdaU8mLZuAd4jWBrciWLxrAkWwdIcFUWWBkoWg/exec'
+      let url = 'https://ntpu.herokuapp.com/dorm/detail'
       this.$http.post(url, {user_id:this.id})
       .then((response) => {
-        if(response.body.f == "1")
-          this.dorm_status = "已取得宿舍入住資格"
+        if(response.body.message.status_code == "1")
+          this.dorm_status = response.body.message.status
+        else if(response.body.message.status_code == "0")
+          this.dorm_status = response.body.message.status
         else
-          this.dorm_status = "找不到任何資料"
+          this.dorm_status = "存取時發生錯誤"
       })
       .catch(() => {
+        this.dorm_status = "無法載入"
         console.log('Got some errors!!')
       })
     }
