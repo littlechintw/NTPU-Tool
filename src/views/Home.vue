@@ -60,7 +60,14 @@
                   <br>
               </v-row>
               <v-row align="center" justify="center" length>
-                  {{ dorm_status }}
+                  <p style="font-size: 22px;">(☞ﾟヮﾟ)☞ {{ dorm_status }} ☜(ﾟヮﾟ☜)</p>
+              </v-row>
+              <v-row align="center" justify="center" length>
+                  <br>
+              </v-row>
+              <v-row align="center" justify="center" length>
+                  <p style="color:#646464;font-size: 13px;">{{ dorm_status_data_detail }}</p>
+                  <a :href=dorm_status_data_detail_url style="color:#646464;font-size: 13px;" target="_blank">{{ dorm_status_data_detail_url }}</a>
               </v-row>
             </v-col>
           </v-row>
@@ -110,6 +117,8 @@ export default {
         fontSize: '10px'
     },
     dorm_status: '載入中...',
+    dorm_status_data_detail: '',
+    dorm_status_data_detail_url: '',
   }),
 
   methods: {
@@ -125,16 +134,25 @@ export default {
       this.qrcode_show = false
       this.form_show = true
       this.$cookie.delete('userid');
+      this.dorm_status = '載入中...'
+      this.dorm_status_data_detail = ''
+      this.dorm_status_data_detail_url = ''
     },
     get_dorm_status(){
       console.log("You just sent a request to get dorm status!")
       let url = 'https://ntpu.herokuapp.com/dorm/detail'
       this.$http.post(url, {user_id:this.id})
       .then((response) => {
-        if(response.body.message.status_code == "1")
+        if(response.body.message.status_code == "1"){
           this.dorm_status = response.body.message.status
-        else if(response.body.message.status_code == "0")
+          this.dorm_status_data_detail = response.body.message.data_detail
+          this.dorm_status_data_detail_url = response.body.message.data_detail_url
+        }
+        else if(response.body.message.status_code == "0"){
           this.dorm_status = response.body.message.status
+          this.dorm_status_data_detail = response.body.message.data_detail
+          this.dorm_status_data_detail_url = response.body.message.data_detail_url
+        }
         else
           this.dorm_status = "存取時發生錯誤"
       })

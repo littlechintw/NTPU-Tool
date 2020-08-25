@@ -45,3 +45,10 @@
     </v-container>
   </div>
 </template>
+
+<style>
+div{
+  margin-left : 3pt;
+	margin-right: 6pt;
+}
+</style>
