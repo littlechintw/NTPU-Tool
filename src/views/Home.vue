@@ -60,7 +60,7 @@
                   <br>
               </v-row>
               <v-row align="center" justify="center" length>
-                  <p style="font-size: 22px;">(☞ﾟヮﾟ)☞ {{ dorm_status }} ☜(ﾟヮﾟ☜)</p>
+                  <p style="font-size: 22px;">☞ {{ dorm_status }} ☜</p>
               </v-row>
               <v-row align="center" justify="center" length>
                   <br>
