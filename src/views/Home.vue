@@ -11,7 +11,7 @@
                   <v-checkbox v-model="checkbox_self" :rules="[v => !!v || 'You must agree to continue!']" label="確定這個學號是自己的嗎？" required></v-checkbox>
                   <v-checkbox v-model="checkbox_law" :rules="[v => !!v || 'You must agree to continue!']" label="同意服務條款" required></v-checkbox>
                   <p style="font-size: 12px;color: gray;">相關條款可點選右上角問號按鈕查看</p>
-                  <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">產生條碼</v-btn>
+                  <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">登入</v-btn>
                 </v-form>
               </v-row>
               <!-- <v-row align="center" justify="left" length>
