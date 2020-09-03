@@ -19,6 +19,22 @@ Vue.use(VueRouter)
     meta:{
       title: 'NTPU Tool - About',
     },
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: () => import('../views/Admin.vue'),
+    meta:{
+      title: 'NTPU Tool - Admin',
+    },
+  },
+  {
+    path: '/dorm',
+    name: 'Dorm',
+    component: () => import('../views/Dorm.vue'),
+    meta:{
+      title: 'NTPU Tool - Dorm',
+    },
   }
 ]
 

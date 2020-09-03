@@ -10,6 +10,7 @@
   "dependencies": {
     "@xkeshi/vue-barcode": "github:xkeshi/vue-barcode",
     "core-js": "^3.6.5",
+    "js-md5": "^0.7.3",
     "register-service-worker": "^1.7.1",
     "vue-analytics": "^5.22.1",
     "vue-barcode": "^1.2.0",
