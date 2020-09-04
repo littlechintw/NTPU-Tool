@@ -28,6 +28,7 @@
             </v-row>
             <v-row align="center" justify="center" length>
                 <p style="color:#646464;font-size: 20px;">{{ dorm_status }}</p>
+                <a href="https://eschool.landbank.com.tw/student_login.aspx">繳費查詢</a>
             </v-row>
           </v-col>
         </v-row>
