@@ -28,7 +28,21 @@
             </v-row>
             <v-row align="center" justify="center" length>
                 <p style="color:#646464;font-size: 20px;">{{ dorm_status }}</p>
-                <a href="https://eschool.landbank.com.tw/student_login.aspx">繳費查詢</a>
+            </v-row>
+            <v-row align="center" justify="center" length>
+                <a href="https://eschool.landbank.com.tw/student_login.aspx" target="_blank">繳費查詢</a>
+            </v-row>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-card>
+    <br>
+    <v-card class="mx-auto" width="344" elevation="5">
+      <v-container fluid>
+        <v-row>
+          <v-col cols="12" align="center">
+            <v-row align="center" justify="center" length>
+              <h1 class="date">{{ timestamp }}</h1>
             </v-row>
           </v-col>
         </v-row>
@@ -52,6 +66,7 @@ export default {
     ],
     dorm_status: 'Waiting...',
     dorm_status_data_detail: '',
+    timestamp: '',
   }),
 
   methods: {
@@ -83,11 +98,18 @@ export default {
         this.dorm_status = "無法載入，或是你就不能存取阿ㄎㄎ。"
         console.log('Got some errors!!')
       })
+    },
+    getNow() {
+      const today = new Date();
+      const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      const dateTime = date +' '+ time;
+      this.timestamp = dateTime;
     }
   },
 
   created: function () {
-
+    setInterval(this.getNow, 1000);
   }
 }
 </script>
