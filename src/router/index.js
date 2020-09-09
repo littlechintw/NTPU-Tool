@@ -35,6 +35,14 @@ Vue.use(VueRouter)
     meta:{
       title: 'NTPU Tool - Dorm',
     },
+  },
+  {
+    path: '/su/rns',
+    name: 'Real-Name System',
+    component: () => import('../views/rns.vue'),
+    meta:{
+      title: 'NTPU Tool - Real-Name System',
+    },
   }
 ]
 
