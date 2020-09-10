@@ -103,7 +103,7 @@ export default {
     validate () {
       if(this.$refs.form.validate()){
         this.error_msg = "載入中..."
-        let url = 'https://e917dea4ea8e.ngrok.io/su/rns'
+        let url = 'https://812b7573a2be.ngrok.io/su/rns'
         this.$http.post(url, {uuid:this.id,name:this.name})
         .then((response) => {
           if(response.body.code == "200"){
