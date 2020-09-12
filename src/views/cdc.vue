@@ -6,9 +6,11 @@
           <v-row>
             <v-col cols="12" >
               <v-row align="center" justify="center" length>
-                  <h1>學生會活動防疫登入</h1>
+                  <h1>實聯制登錄</h1>
               </v-row>
               <v-row align="center" justify="center" length>
+                  <br>
+                  <p style="font-size: 12px;color: gray;">Event - {{ event_id }}</p>
                   <br>
               </v-row>
               <v-row align="center" justify="center" length>
@@ -34,7 +36,7 @@
             <v-col cols="12" align="center">
               <v-row align="center" justify="center" length>
                   <v-icon>done</v-icon>
-                  <h1>成功登入防疫資訊！</h1>
+                  <h1>成功登錄防疫資訊！</h1>
               </v-row>
               <v-row align="center" justify="center" length>
                   <br>
@@ -55,12 +57,15 @@
                   <br>
               </v-row>
               <v-row align="center" justify="center" length>
-                  <h4>請將本畫面交予工作人員查看，您也可使用截圖功能儲存。</h4>
+                  <h4>請將本畫面交給工作人員查看，您也可使用截圖功能儲存。</h4>
               </v-row>
             </v-col>
           </v-row>
         </v-container>
       </v-card>
+    </div>
+    <div class="form" v-show="error_page">
+      <h2 style="color: red;">{{ error_msg }}</h2>
     </div>
   </div>
 </template>
@@ -87,6 +92,7 @@ export default {
     checkbox_self: false,
     result_show: false,
     form_show: true,
+    error_page: false,
     barcode_option:{
         displayValue: false,
         background: '#fff',
@@ -97,14 +103,19 @@ export default {
     error_msg: '',
     uuid_get: '',
     time_get: '',
+    event_id: '',
   }),
 
   methods: {
     validate () {
       if(this.$refs.form.validate()){
         this.error_msg = "載入中..."
-        let url = 'https://812b7573a2be.ngrok.io/su/rns'
-        this.$http.post(url, {uuid:this.id,name:this.name})
+        let url = 'https://fecc3ebb52df.ngrok.io/cdc'
+        this.$http.post(url, {
+          uuid: this.id,
+          name: this.name,
+          event: this.event_id,
+        })
         .then((response) => {
           if(response.body.code == "200"){
             this.error_msg = ""
@@ -125,12 +136,13 @@ export default {
   },
 
   created: function () {
-    // if(this.$cookie.get('userid')){
-    //   this.id = this.$cookie.get('userid')
-    //   this.qrcode_show = true
-    //   this.form_show = false
-    //   this.get_dorm_status()
-    // }
+    if(!this.$route.params.id){
+      this.result_show = false
+      this.form_show = false
+      this.error_page = true
+      this.error_msg = '請確認登錄網址'
+    }
+    this.event_id = this.$route.params.id
   }
 }
 </script>

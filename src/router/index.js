@@ -37,9 +37,9 @@ Vue.use(VueRouter)
     },
   },
   {
-    path: '/su/rns',
+    path: '/cdc/:id?',
     name: 'Real-Name System',
-    component: () => import('../views/rns.vue'),
+    component: () => import('../views/cdc.vue'),
     meta:{
       title: 'NTPU Tool - Real-Name System',
     },
