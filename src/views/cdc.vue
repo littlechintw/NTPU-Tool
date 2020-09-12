@@ -40,6 +40,8 @@
               </v-row>
               <v-row align="center" justify="center" length>
                   <br>
+                  <p style="font-size: 12px;color: gray;">Event - {{ event_id }}</p>
+                  <br>
               </v-row>
               <v-row align="center" justify="center" length>
                   <h2 style="color: blue;">{{ id }} - {{ name }}</h2>
