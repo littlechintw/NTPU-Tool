@@ -18,14 +18,39 @@
                   <v-text-field v-model="id" :rules="idRules" type="number" label="學號 / Student ID" required></v-text-field>
                   <v-text-field v-model="name" :rules="idName" label="姓名 / Name" required></v-text-field>
                   <v-checkbox v-model="checkbox_self" :rules="[v => !!v || 'You must agree to continue!']" label="確定這個學號是自己的嗎？" required></v-checkbox>
-                  <v-checkbox v-model="checkbox_law" :rules="[v => !!v || 'You must agree to continue!']" label="同意以下規定" required></v-checkbox>
-                  <p style="font-size: 12px;color: gray;">本資料僅用於防疫需要，不會用於他處。</p>
+                  <v-checkbox v-model="checkbox_law" :rules="[v => !!v || 'You must agree to continue!']" label="同意個人資料使用說明" required></v-checkbox>
                   <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">送出</v-btn>
                   <p style="font-size: 12px;color: red;">{{ error_msg }}</p>
                 </v-form>
               </v-row>
             </v-col>
           </v-row>
+        </v-container>
+      </v-card><br>
+      <v-card class="mx-auto" width="344">
+        <v-container fluid>
+          <p style="font-size: 16px;">個人資料使用說明</p>
+          <p style="font-size: 12px;">
+            (一)蒐集機關之名稱：國立臺北大學三峽校區學生會、國立臺北大學課外指導組
+          </p>
+          <p style="font-size: 12px;">
+            (二)蒐集之目的：防疫目的，依據「個人資料保護法之特定目的及個人資料之類別」為代號012公共衛生或傳染病防治之特定目的，且不得為目的外利用。
+          </p>
+          <p style="font-size: 12px;"> 
+            (三)蒐集之個人資料項目：學號、姓名。
+          </p>
+          <p style="font-size: 12px;">
+            (四)個人資料利用之期間：自蒐集日起28日內。
+          </p>
+          <p style="font-size: 12px;">
+            (五)個人資料利用之對象及方式：為防堵疫情而有必要時，得提供衛生主管機關依傳染病防治法等規定進行疫情調查及聯繫使用。
+          </p>
+          <p style="font-size: 12px;">
+            (六)當事人就其個人資料得依個人資料保護法規定，向蒐集之機關行使權利，包括查詢或請求閱覽、請求製給複製本、請求補充或更正、請求蒐集、處理或利用、請求刪除，及行使方式。
+          </p>
+          <p style="font-size: 12px;">  
+            (七)當事人不同意提供個人資料對其權益之影響，不得參與活動。
+          </p>
         </v-container>
       </v-card>
     </div>
