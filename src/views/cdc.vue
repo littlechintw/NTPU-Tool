@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="form" v-show="form_show">
-      <v-card class="mx-auto" width="344">
+      <v-card class="mx-auto" width="344" :disabled="!init" :loading="!init">
         <v-container fluid>
           <v-row>
             <v-col cols="12" >
@@ -10,13 +10,15 @@
               </v-row>
               <v-row align="center" justify="center" length>
                   <br>
-                  <p style="font-size: 12px;color: gray;">Event - {{ event_id }}</p>
+                  <p style="font-size: 12px;color: gray;">Event - {{ event_title }}</p>
                   <br>
               </v-row>
               <v-row align="center" justify="center" length>
                 <v-form ref="form" v-model="valid" lazy-validation>
                   <v-text-field v-model="id" :rules="idRules" type="number" label="學號 / Student ID" required></v-text-field>
+                  <p style="font-size: 10px;">如非在校學生，請在學號欄位輸入 000000000</p>
                   <v-text-field v-model="name" :rules="idName" label="姓名 / Name" required></v-text-field>
+                  <v-text-field v-model="phone" :rules="idPhone" label="電話 / Phone" required></v-text-field>
                   <v-checkbox v-model="checkbox_self" :rules="[v => !!v || 'You must agree to continue!']" label="確定這個學號是自己的嗎？" required></v-checkbox>
                   <v-checkbox v-model="checkbox_law" :rules="[v => !!v || 'You must agree to continue!']" label="同意個人資料使用說明" required></v-checkbox>
                   <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">送出</v-btn>
@@ -27,17 +29,17 @@
           </v-row>
         </v-container>
       </v-card><br>
-      <v-card class="mx-auto" width="344">
+      <v-card class="mx-auto" width="344" :disabled="!init" :loading="!init">
         <v-container fluid>
           <p style="font-size: 16px;">個人資料使用說明</p>
           <p style="font-size: 12px;">
-            (一)蒐集機關之名稱：國立臺北大學三峽校區學生會、國立臺北大學課外指導組
+            (一)蒐集機關之名稱：國立臺北大學三峽校區學生會、{{ agency }}
           </p>
           <p style="font-size: 12px;">
             (二)蒐集之目的：防疫目的，依據「個人資料保護法之特定目的及個人資料之類別」為代號012公共衛生或傳染病防治之特定目的，且不得為目的外利用。
           </p>
           <p style="font-size: 12px;"> 
-            (三)蒐集之個人資料項目：學號、姓名。
+            (三)蒐集之個人資料項目：學號、姓名、電話。
           </p>
           <p style="font-size: 12px;">
             (四)個人資料利用之期間：自蒐集日起28日內。
@@ -115,6 +117,9 @@ export default {
     idName: [
       v => !!v || '請輸入姓名',
     ],
+    idPhone: [
+      v => !!v || '請輸入電話',
+    ],
     select: null,
     checkbox_self: false,
     result_show: false,
@@ -131,17 +136,21 @@ export default {
     uuid_get: '',
     time_get: '',
     event_id: '',
+    init: false,
+    event_title: 'Loading...',
+    agency: 'Loading...',
   }),
 
   methods: {
     validate () {
       if(this.$refs.form.validate()){
         this.error_msg = "載入中..."
-        let url = 'https://fecc3ebb52df.ngrok.io/cdc'
+        let url = 'https://fecc3ebb52df.ngrok.io/cdc/enter'
         this.$http.post(url, {
           uuid: this.id,
           name: this.name,
           event: this.event_id,
+          phone: this.phone,
         })
         .then((response) => {
           if(response.body.code == "200"){
@@ -170,6 +179,27 @@ export default {
       this.error_msg = '請確認登錄網址'
     }
     this.event_id = this.$route.params.id
+    this.error_msg = "載入中..."
+    let url = 'https://fecc3ebb52df.ngrok.io/cdc/manage'
+    this.$http.post(url, {
+      event: this.event_id,
+    })
+    .then((response) => {
+      if(response.body.code == "200"){
+        this.error_msg = ""
+        this.event_title = response.body.message.title
+        this.agency = response.body.message.agency
+        this.init = true
+      }
+      else
+        this.error_msg = "存取時發生錯誤，或此網頁目前無開放使用。"
+    })
+    .catch(() => {
+      this.event_title = "error..."
+      this.agency = "error..."
+      this.error_msg = "無法載入，請重新載入"
+      console.log('Got some errors!!')
+    })
   }
 }
 </script>
