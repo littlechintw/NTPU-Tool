@@ -1,0 +1,145 @@
+<template>
+  <div class="home">
+    <div class="form" v-show="form_show">
+      <v-card class="mx-auto" width="344" :disabled="!init" :loading="!init">
+        <v-container fluid style="text-align: center;width:87%;">
+          <v-row align="center" justify="center">
+            <v-col cols="12" >
+              <v-row align="center" justify="center" length>
+                  <h1>實聯制登錄名單存取</h1>
+              </v-row>
+              <v-row align="center" justify="center" length>
+                  <br>
+                  <p style="font-size: 12px;color: gray;">Event - {{ event_title }}</p>
+                  <br>
+              </v-row>
+              <v-row align="center" justify="center" length>
+                <v-form ref="form" v-model="valid" lazy-validation>
+                  <v-text-field v-model="access_code" :rules="idAccess_Code" label="通行碼 / Access Code" required></v-text-field>
+                  <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">送出</v-btn>
+                  <p style="font-size: 12px;color: red;">{{ error_msg }}</p>
+                </v-form>
+              </v-row>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-card>
+    </div>
+    <div class="qrcode" v-show="result_show">
+      <v-data-table
+        :headers="headers"
+        :items="name_list"
+        :items-per-page="5"
+        class="elevation-1"
+      ></v-data-table>
+    </div>
+    <div class="form" v-show="error_page">
+      <h2 style="color: red;">{{ error_msg }}</h2>
+    </div>
+  </div>
+</template>
+
+<script>
+// import LoginForm from '@/components/LoginForm.vue'
+
+export default {
+  name: 'Home',
+  components: {
+    // LoginForm
+  },
+  data: () => ({
+    valid: true,
+    access_code: '',
+    idAccess_Code: [
+      v => !!v || '請輸入通行碼',
+    ],
+    select: null,
+    result_show: false,
+    form_show: true,
+    error_page: false,
+    barcode_option:{
+        displayValue: false,
+        background: '#fff',
+        width: '2px',
+        height: '30px',
+        fontSize: '10px'
+    },
+    error_msg: '',
+    uuid_get: '',
+    time_get: '',
+    event_id: '',
+    init: false,
+    event_title: 'Loading...',
+    agency: 'Loading...',
+    headers: [
+      { text: '時間', value: 'timestamp' },
+      { text: '學號', value: 'stu_id' },
+      { text: '姓名', value: 'name' },
+      { text: '電話', value: 'phone' },
+    ],
+    name_list: [],
+  }),
+
+  methods: {
+    validate () {
+      if(this.$refs.form.validate()){
+        this.error_msg = "載入中..."
+        let url = 'https://fecc3ebb52df.ngrok.io/cdc/access'
+        this.$http.post(url, {
+          event: this.event_id,
+          access_code: this.access_code,
+        })
+        .then((response) => {
+          if(response.body.code == "200"){
+            this.error_msg = ""
+            this.name_list = response.body.message
+            this.result_show = true
+            this.form_show = false
+          }
+          else
+            this.error_msg = "存取時發生錯誤，或通行碼錯誤，請重新送出"
+        })
+        .catch(() => {
+          this.error_msg = "無法載入，請重新送出"
+          console.log('Got some errors!!')
+        })
+      }
+    },
+  },
+
+  created: function () {
+    if(!this.$route.params.id){
+      this.result_show = false
+      this.form_show = false
+      this.error_page = true
+      this.error_msg = '請確認登錄網址'
+    }
+    this.event_id = this.$route.params.id
+    this.error_msg = "載入中..."
+    let url = 'https://fecc3ebb52df.ngrok.io/cdc/manage'
+    this.$http.post(url, {
+      event: this.event_id,
+    })
+    .then((response) => {
+      if(response.body.code == "200"){
+        this.error_msg = ""
+        this.event_title = response.body.message.title
+        this.agency = response.body.message.agency
+        this.init = true
+      }
+      else{
+        this.result_show = false
+        this.form_show = false
+        this.error_page = true
+        this.error_msg = "存取時發生錯誤，或此網頁目前無開放使用。"
+      }
+    })
+    .catch(() => {
+      this.event_title = "error..."
+      this.agency = "error..."
+      this.error_msg = "無法載入，請重新載入"
+      console.log('Got some errors!!')
+    })
+  }
+}
+</script>

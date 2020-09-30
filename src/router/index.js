@@ -43,7 +43,15 @@ Vue.use(VueRouter)
     meta:{
       title: 'NTPU Tool - Real-Name System',
     },
-  }
+  },
+  {
+    path: '/cdc/:id?/attend',
+    name: 'Real-Name System',
+    component: () => import('../views/cdc_attend.vue'),
+    meta:{
+      title: 'NTPU Tool - Real-Name System',
+    },
+  },
 ]
 
 const router = new VueRouter({

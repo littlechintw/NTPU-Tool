@@ -13,7 +13,7 @@
                   <p style="font-size: 12px;color: gray;">Event - {{ event_title }}</p>
                   <br>
               </v-row>
-              <v-row align="center" justify="center" length>
+              <v-row align="center" justify="center" length v-show="summit_open">
                 <v-form ref="form" v-model="valid" lazy-validation>
                   <v-text-field v-model="id" :rules="idRules" type="number" label="學號 / Student ID" required></v-text-field>
                   <p style="font-size: 10px;">如非在校學生，請在學號欄位輸入 000000000</p>
@@ -29,7 +29,7 @@
         </v-container>
       </v-card><br>
       <v-card class="mx-auto" width="344" :disabled="!init" :loading="!init">
-        <v-container fluid>
+        <v-container fluid style="text-align: center;width:87%;">
           <p style="font-size: 16px;">個人資料使用說明</p>
           <p style="font-size: 12px;">
             (一)蒐集機關之名稱：國立臺北大學三峽校區學生會、{{ agency }}
@@ -66,7 +66,7 @@
               </v-row>
               <v-row align="center" justify="center" length>
                   <br>
-                  <p style="font-size: 12px;color: gray;">Event - {{ event_id }}</p>
+                  <p style="font-size: 12px;color: gray;">Event - {{ event_title }}</p>
                   <br>
               </v-row>
               <v-row align="center" justify="center" length>
@@ -107,7 +107,7 @@ export default {
     // LoginForm
   },
   data: () => ({
-    valid: true,
+    valid: false,
     id: '',
     idRules: [
       v => !!v || '請輸入學號',
@@ -137,6 +137,7 @@ export default {
     init: false,
     event_title: 'Loading...',
     agency: 'Loading...',
+    summit_open: false,
   }),
 
   methods: {
@@ -187,10 +188,15 @@ export default {
         this.error_msg = ""
         this.event_title = response.body.message.title
         this.agency = response.body.message.agency
+        this.summit_open = response.body.message.open
         this.init = true
       }
-      else
+      else{
+        this.result_show = false
+        this.form_show = false
+        this.error_page = true
         this.error_msg = "存取時發生錯誤，或此網頁目前無開放使用。"
+      }
     })
     .catch(() => {
       this.event_title = "error..."
