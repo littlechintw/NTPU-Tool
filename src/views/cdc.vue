@@ -2,8 +2,8 @@
   <div class="home">
     <div class="form" v-show="form_show">
       <v-card class="mx-auto" width="344" :disabled="!init" :loading="!init">
-        <v-container fluid>
-          <v-row>
+        <v-container fluid style="text-align: center;width:87%;">
+          <v-row align="center" justify="center">
             <v-col cols="12" >
               <v-row align="center" justify="center" length>
                   <h1>實聯制登錄</h1>
@@ -19,8 +19,7 @@
                   <p style="font-size: 10px;">如非在校學生，請在學號欄位輸入 000000000</p>
                   <v-text-field v-model="name" :rules="idName" label="姓名 / Name" required></v-text-field>
                   <v-text-field v-model="phone" :rules="idPhone" label="電話 / Phone" required></v-text-field>
-                  <v-checkbox v-model="checkbox_self" :rules="[v => !!v || 'You must agree to continue!']" label="確定這個學號是自己的嗎？" required></v-checkbox>
-                  <v-checkbox v-model="checkbox_law" :rules="[v => !!v || 'You must agree to continue!']" label="同意個人資料使用說明" required></v-checkbox>
+                  <v-checkbox v-model="checkbox_law" :rules="[v => !!v || 'You must agree to continue!']" label="本人已閱讀說明並願意提供資料，且以上所有資訊正確無誤。" required></v-checkbox>
                   <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">送出</v-btn>
                   <p style="font-size: 12px;color: red;">{{ error_msg }}</p>
                 </v-form>
@@ -121,7 +120,6 @@ export default {
       v => !!v || '請輸入電話',
     ],
     select: null,
-    checkbox_self: false,
     result_show: false,
     form_show: true,
     error_page: false,
