@@ -144,7 +144,7 @@ export default {
     validate () {
       if(this.$refs.form.validate()){
         this.error_msg = "載入中..."
-        let url = 'https://fecc3ebb52df.ngrok.io/cdc/enter'
+        let url = 'https://38b3b37dd174.ngrok.io/cdc/enter'
         this.$http.post(url, {
           uuid: this.id,
           name: this.name,
@@ -179,7 +179,7 @@ export default {
     }
     this.event_id = this.$route.params.id
     this.error_msg = "載入中..."
-    let url = 'https://fecc3ebb52df.ngrok.io/cdc/manage'
+    let url = 'https://38b3b37dd174.ngrok.io/cdc/manage'
     this.$http.post(url, {
       event: this.event_id,
     })
