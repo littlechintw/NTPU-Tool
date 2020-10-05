@@ -18,12 +18,11 @@
 </template>
 
 <script>
-// import LoginForm from '@/components/LoginForm.vue'
 import md5 from 'js-md5';
 export default {
   name: 'Admin',
   components: {
-    // LoginForm
+    
   },
   data: () => ({
     id: '',
