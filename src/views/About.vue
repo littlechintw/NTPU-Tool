@@ -25,7 +25,7 @@
             <h2>開發說明</h2>
           </v-row>
           <v-row align="center" justify="left" length>
-            <p>由於發現有些人無法使用學生證刷卡或是很難刷進，故開發了本服務。</p>
+            <p>由於發現有些人無法使用學生證刷卡或是很難刷進，故開發了本服務。目前亦有許多不同服務在此專案上。</p>
           </v-row>
           <v-row align="center" justify="left" length>
             <h2>Author</h2>

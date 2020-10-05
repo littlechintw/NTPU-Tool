@@ -55,7 +55,7 @@
 export default {
   name: 'Dorm',
   components: {
-    // LoginForm
+    
   },
   data: () => ({
     valid: true,

@@ -40,12 +40,10 @@
 </template>
 
 <script>
-// import LoginForm from '@/components/LoginForm.vue'
-
 export default {
-  name: 'Home',
+  name: 'CDC - Attend',
   components: {
-    // LoginForm
+    
   },
   data: () => ({
     valid: true,
