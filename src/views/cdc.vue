@@ -37,7 +37,7 @@
         <v-container fluid style="text-align: center;width:87%;">
           <p style="font-size: 16px;">個人資料使用說明</p>
           <p style="font-size: 12px;">
-            (一)蒐集機關之名稱：國立臺北大學三峽校區學生會、{{ agency }}
+            (一)蒐集機關之名稱：第 21 屆國立臺北大學三峽校區學生會資訊部、{{ agency }}
           </p>
           <p style="font-size: 12px;">
             (二)蒐集之目的：防疫目的，依據「個人資料保護法之特定目的及個人資料之類別」為代號012公共衛生或傳染病防治之特定目的，且不得為目的外利用。
