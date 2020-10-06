@@ -36,11 +36,16 @@
       </v-btn>
       <p>下載之檔案為 .csv 檔，期間以逗號隔開，且格式為 utf-8</p>
       <br><br>
+      <v-btn class="ma-2" rounded color="" @click="validate">
+        <v-icon left>mdi-refresh</v-icon> Refresh
+      </v-btn>
       <v-data-table
         :headers="headers"
         :items="name_list"
         :items-per-page="5"
         class="elevation-1"
+        :disabled="loading_show"
+        :loading="loading_show"
       ></v-data-table>
     </div>
     <div class="form" v-show="error_page">
@@ -88,6 +93,7 @@ export default {
     name_list: [],
     csv_url: "",
     btn_show: true,
+    loading_show: false,
   }),
 
   methods: {
@@ -95,6 +101,7 @@ export default {
       if(this.$refs.form.validate()){
         this.error_msg = "載入中..."
         this.btn_show = false
+        this.loading_show = true
         let url = 'https://38b3b37dd174.ngrok.io/cdc/access'
         this.$http.post(url, {
           event: this.event_id,
@@ -107,6 +114,7 @@ export default {
             this.csv_url = 'https://38b3b37dd174.ngrok.io/cdc/access/csv/' + this.event_id + '/' + this.access_code + '/' + Math.random()
             this.result_show = true
             this.form_show = false
+            this.loading_show = false
           }
           else{
             this.btn_show = true
