@@ -102,6 +102,7 @@ export default {
         this.error_msg = "載入中..."
         this.btn_show = false
         this.loading_show = true
+        this.name_list = []
         let url = 'https://38b3b37dd174.ngrok.io/cdc/access'
         this.$http.post(url, {
           event: this.event_id,
