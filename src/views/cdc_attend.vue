@@ -16,7 +16,12 @@
               <v-row align="center" justify="center" length>
                 <v-form ref="form" v-model="valid" lazy-validation>
                   <v-text-field v-model="access_code" :rules="idAccess_Code" label="通行碼 / Access Code" required></v-text-field>
-                  <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">送出</v-btn>
+                  <div v-show="btn_show">
+                    <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">送出</v-btn>
+                  </div>
+                  <div v-show="!btn_show">
+                    <v-progress-circular indeterminate color="primary"></v-progress-circular>
+                  </div>
                   <p style="font-size: 12px;color: red;">{{ error_msg }}</p>
                 </v-form>
               </v-row>
@@ -26,6 +31,11 @@
       </v-card>
     </div>
     <div class="qrcode" v-show="result_show">
+      <v-btn class="ma-2" rounded color="success" :href="csv_url" @click="url_random">
+        <v-icon left>mdi-download</v-icon> Download .csv
+      </v-btn>
+      <p>下載之檔案為 .csv 檔，期間以逗號隔開，且格式為 utf-8</p>
+      <br><br>
       <v-data-table
         :headers="headers"
         :items="name_list"
@@ -76,12 +86,15 @@ export default {
       { text: '電話', value: 'phone' },
     ],
     name_list: [],
+    csv_url: "",
+    btn_show: true,
   }),
 
   methods: {
     validate () {
       if(this.$refs.form.validate()){
         this.error_msg = "載入中..."
+        this.btn_show = false
         let url = 'https://38b3b37dd174.ngrok.io/cdc/access'
         this.$http.post(url, {
           event: this.event_id,
@@ -91,18 +104,25 @@ export default {
           if(response.body.code == "200"){
             this.error_msg = ""
             this.name_list = response.body.message
+            this.csv_url = 'https://38b3b37dd174.ngrok.io/cdc/access/csv/' + this.event_id + '/' + this.access_code + '/' + Math.random()
             this.result_show = true
             this.form_show = false
           }
-          else
+          else{
+            this.btn_show = true
             this.error_msg = "存取時發生錯誤，或通行碼錯誤，請重新送出"
+          }
         })
         .catch(() => {
+          this.btn_show = true
           this.error_msg = "無法載入，請重新送出"
           console.log('Got some errors!!')
         })
       }
     },
+    url_random(){
+      this.csv_url = 'https://38b3b37dd174.ngrok.io/cdc/access/csv/' + this.event_id + '/' + this.access_code + '/' + Math.random()
+    }
   },
 
   created: function () {

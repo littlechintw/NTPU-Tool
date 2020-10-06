@@ -20,7 +20,12 @@
                   <v-text-field v-model="name" :rules="idName" label="姓名 / Name" required></v-text-field>
                   <v-text-field v-model="phone" :rules="idPhone" label="電話 / Phone" required></v-text-field>
                   <v-checkbox v-model="checkbox_law" :rules="[v => !!v || 'You must agree to continue!']" label="本人已閱讀說明並願意提供資料，且以上所有資訊正確無誤。" required></v-checkbox>
-                  <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">送出</v-btn>
+                  <div v-show="btn_show">
+                    <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">送出</v-btn>
+                  </div>
+                  <div v-show="!btn_show">
+                    <v-progress-circular indeterminate color="primary"></v-progress-circular>
+                  </div>
                   <p style="font-size: 12px;color: red;">{{ error_msg }}</p>
                 </v-form>
               </v-row>
@@ -136,12 +141,14 @@ export default {
     event_title: 'Loading...',
     agency: 'Loading...',
     summit_open: false,
+    btn_show: true,
   }),
 
   methods: {
     validate () {
       if(this.$refs.form.validate()){
         this.error_msg = "載入中..."
+        this.btn_show = false
         let url = 'https://38b3b37dd174.ngrok.io/cdc/enter'
         this.$http.post(url, {
           uuid: this.id,
@@ -157,10 +164,13 @@ export default {
             this.result_show = true
             this.form_show = false
           }
-          else
+          else{
+            this.btn_show = true
             this.error_msg = "存取時發生錯誤，或輸入資料發生問題，請重新送出"
+          }
         })
         .catch(() => {
+          this.btn_show = true
           this.error_msg = "無法載入，請重新送出"
           console.log('Got some errors!!')
         })
