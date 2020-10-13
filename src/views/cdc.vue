@@ -10,18 +10,27 @@
               </v-row>
               <v-row align="center" justify="center" length>
                   <br>
-                  <p style="font-size: 12px;color: gray;">Event - {{ event_title }}</p>
+                  <v-chip class="ma-2" color="green" outlined>
+                    {{ event_title }}
+                  </v-chip>
+                  <!-- <p style="font-size: 12px;color: gray;">Event - {{ event_title }}</p> -->
                   <br>
               </v-row>
+              <v-row align="center" justify="center" length v-show="!summit_open && init">
+                <v-chip class="ma-2" color="red" outlined>
+                  目前非開放時間
+                </v-chip>
+              </v-row>
               <v-row align="center" justify="center" length v-show="summit_open">
-                <v-form ref="form" v-model="valid" lazy-validation>
-                  <v-text-field v-model="id" :rules="idRules" type="number" label="學號 / Student ID" required></v-text-field>
-                  <p style="font-size: 10px;">如非在校學生，請在學號欄位輸入 000000000</p>
+                <v-form ref="form" v-model="valid">
+                  <v-switch v-model="ntpu_stu" inset label="北大學生？" align="center" justify="center"></v-switch>
+                  <v-text-field v-model="id" :error-messages="idErrors" type="number" label="學號 / Student ID" v-show="ntpu_stu"></v-text-field>
+                  <!-- <p style="font-size: 10px;">如非在校學生，請在學號欄位輸入 000000000</p> -->
                   <v-text-field v-model="name" :rules="idName" label="姓名 / Name" required></v-text-field>
-                  <v-text-field v-model="phone" :rules="idPhone" label="電話 / Phone" required></v-text-field>
+                  <v-text-field v-model="phone" :rules="idPhone" type="number" label="電話 / Phone" required></v-text-field>
                   <v-checkbox v-model="checkbox_law" :rules="[v => !!v || 'You must agree to continue!']" label="本人已閱讀說明並願意提供資料，且以上所有資訊正確無誤。" required></v-checkbox>
                   <div v-show="btn_show">
-                    <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">送出</v-btn>
+                    <v-btn :disabled="!checkbox_law" color="success" class="mr-4" @click="validate">送出</v-btn>
                   </div>
                   <div v-show="!btn_show">
                     <v-progress-circular indeterminate color="primary"></v-progress-circular>
@@ -61,41 +70,58 @@
       </v-card>
     </div>
     <div class="qrcode" v-show="result_show">
-      <v-card class="mx-auto" width="344" elevation="5">
+      <v-card class="mx-auto" width="344" elevation="5" :color="check_color">
         <v-container fluid>
           <v-row>
             <v-col cols="12" align="center">
               <v-row align="center" justify="center" length>
-                  <v-icon>done</v-icon>
-                  <h1>成功登錄防疫資訊！</h1>
+                <v-icon>done</v-icon>
+                <h1>成功登錄</h1>
               </v-row>
               <v-row align="center" justify="center" length>
-                  <br>
-                  <p style="font-size: 12px;color: gray;">Event - {{ event_title }}</p>
-                  <br>
+                <br>
+                <v-chip class="ma-2" color="blue" outlined>
+                  {{ event_title }}
+                </v-chip>
+                <!-- <p style="font-size: 18px;color: gray;">Event - {{ event_title }}</p> -->
+                <br>
               </v-row>
               <v-row align="center" justify="center" length>
-                  <h2 style="color: blue;">{{ id }} - {{ name }}</h2>
+                <br>
               </v-row>
               <v-row align="center" justify="center" length>
-                  <br>
+                <h2 style="color: blue;">學號: {{ final_id }}</h2>
               </v-row>
               <v-row align="center" justify="center" length>
-                  <h7 style="font-size: 10px;color: gray;">{{ time_get }}</h7>
+                <h2 style="color: blue;">姓名: {{ name }}</h2>
+              </v-row>
+              <!-- <v-row align="center" justify="center" length>
+                <br>
+              </v-row> -->
+              <!-- <v-row align="center" justify="center" length>
+                <h7 style="font-size: 10px;color: gray;">{{ time_get }}</h7>
               </v-row>
               <v-row align="center" justify="center" length>
-                  <h7 style="font-size: 10px;color: gray;">{{ uuid_get }}</h7>
-              </v-row>
-              <v-row align="center" justify="center" length>
-                  <br>
-              </v-row>
-              <v-row align="center" justify="center" length>
-                  <h4>請將本畫面交給工作人員查看，您也可使用截圖功能儲存。</h4>
-              </v-row>
+                <h7 style="font-size: 10px;color: gray;">{{ uuid_get }}</h7>
+              </v-row> -->
+              <!-- <v-row align="center" justify="center" length>
+                <br>
+              </v-row> -->
+              <!-- <v-row align="center" justify="center" length>
+                <h4>請將本畫面交給工作人員查看，您也可使用截圖功能儲存。</h4>
+              </v-row> -->
             </v-col>
           </v-row>
         </v-container>
+      </v-card><br>
+      <v-card class="mx-auto" width="344" elevation="5" align="center" justify="center">
+        <!-- <br> -->
+        <h2>檢查資料</h2>
+        <h7 style="color: gray;">登錄時間: {{ time_get }}</h7><br>
+        <h7 style="color: gray;">UUID: {{ uuid_get }}</h7><br>
       </v-card>
+      <br>
+      <h3 style="padding: 3%;"><strong>請停留於本畫面，並交給工作人員查看，或建議使用截圖功能儲存。</strong></h3>
     </div>
     <div class="form" v-show="error_page">
       <h2 style="color: red;">{{ error_msg }}</h2>
@@ -113,9 +139,9 @@ export default {
     valid: false,
     id: '',
     idRules: [
-      v => !!v || '請輸入學號',
       v => (v && v.length === 9) || '請輸入學號正確格式',
     ],
+    idErrors: '',
     idName: [
       v => !!v || '請輸入姓名',
     ],
@@ -126,32 +152,43 @@ export default {
     result_show: false,
     form_show: true,
     error_page: false,
-    barcode_option:{
-        displayValue: false,
-        background: '#fff',
-        width: '2px',
-        height: '30px',
-        fontSize: '10px'
-    },
     error_msg: '',
     uuid_get: '',
     time_get: '',
     event_id: '',
+    ntpu_stu: true,
     init: false,
     event_title: 'Loading...',
     agency: 'Loading...',
     summit_open: false,
     btn_show: true,
+    checkbox_law: false,
+    final_id: '非北大學生',
+    check_color: '#ffffff',
   }),
 
   methods: {
     validate () {
+      this.idErrors = ''
+      var send_id = '000000000'
+      if(!this.id && this.ntpu_stu){
+        this.idErrors = '請輸入學號'
+        return false
+      }
+      if(this.id.length != 9 && this.ntpu_stu){
+        this.idErrors = '請輸入學號正確格式'
+        return false
+      }
+      if(this.ntpu_stu){
+        send_id = this.id
+        this.final_id = this.id
+      }
       if(this.$refs.form.validate()){
-        this.error_msg = "載入中..."
+        // this.error_msg = "載入中..."
         this.btn_show = false
         let url = 'https://38b3b37dd174.ngrok.io/cdc/enter'
-        this.$http.post(url, {
-          uuid: this.id,
+          this.$http.post(url, {
+          uuid: send_id,
           name: this.name,
           event: this.event_id,
           phone: this.phone,
@@ -197,6 +234,7 @@ export default {
         this.event_title = response.body.message.title
         this.agency = response.body.message.agency
         this.summit_open = response.body.message.open
+        this.check_color = response.body.message.check_color
         this.init = true
       }
       else{

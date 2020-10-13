@@ -31,22 +31,36 @@
       </v-card>
     </div>
     <div class="qrcode" v-show="result_show">
-      <v-btn class="ma-2" rounded color="success" :href="csv_url" @click="url_random">
-        <v-icon left>mdi-download</v-icon> Download .csv
-      </v-btn>
-      <p>下載之檔案為 .csv 檔，期間以逗號隔開，且格式為 utf-8</p>
-      <br><br>
-      <v-btn class="ma-2" rounded color="" @click="validate">
-        <v-icon left>mdi-refresh</v-icon> Refresh
-      </v-btn>
-      <v-data-table
-        :headers="headers"
-        :items="name_list"
-        :items-per-page="5"
-        class="elevation-1"
-        :disabled="loading_show"
-        :loading="loading_show"
-      ></v-data-table>
+      <v-card class="mx-auto" align="center" justify="center" :color="check_color">
+        <h2>下載</h2>
+        <p>下載之檔案為 .csv 檔，期間以逗號隔開，且格式為 utf-8</p>
+        <v-btn class="ma-2" rounded color="success" :href="csv_url" @click="url_random">
+          <v-icon left>mdi-download</v-icon> Download .csv
+        </v-btn>
+      </v-card><br>
+      <v-card class="mx-auto" align="center" justify="center">
+        <v-btn class="ma-2" rounded color="" @click="validate">
+          <v-icon left>mdi-refresh</v-icon> Refresh
+        </v-btn>
+        <v-text-field
+          v-model="search"
+          clearable
+          flat
+          solo-inverted
+          hide-details
+          prepend-inner-icon="search"
+          label="Search"
+        ></v-text-field>
+        <v-data-table
+          :headers="headers"
+          :items="name_list"
+          :items-per-page="5"
+          class="elevation-1"
+          :disabled="loading_show"
+          :loading="loading_show"
+          :search="search"
+        ></v-data-table>
+      </v-card>
     </div>
     <div class="form" v-show="error_page">
       <h2 style="color: red;">{{ error_msg }}</h2>
@@ -70,13 +84,6 @@ export default {
     result_show: false,
     form_show: true,
     error_page: false,
-    barcode_option:{
-        displayValue: false,
-        background: '#fff',
-        width: '2px',
-        height: '30px',
-        fontSize: '10px'
-    },
     error_msg: '',
     uuid_get: '',
     time_get: '',
@@ -89,11 +96,14 @@ export default {
       { text: '學號', value: 'stu_id' },
       { text: '姓名', value: 'name' },
       { text: '電話', value: 'phone' },
+      { text: 'uuid', value: 'uuid' },
     ],
     name_list: [],
+    search: '',
     csv_url: "",
     btn_show: true,
     loading_show: false,
+    check_color: '#ffffff',
   }),
 
   methods: {
@@ -152,6 +162,7 @@ export default {
         this.error_msg = ""
         this.event_title = response.body.message.title
         this.agency = response.body.message.agency
+        this.check_color = response.body.message.check_color
         this.init = true
       }
       else{
