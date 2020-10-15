@@ -9,7 +9,7 @@
                   <h1>學生會費查詢</h1>
               </v-row>
               <v-row align="center" justify="center" length>
-                <v-form ref="form" v-model="valid">
+                <v-form ref="form" v-model="valid" @submit="validate" onSubmit="return false;">
                   <v-text-field v-model="stu_id" type="number" label="學號 / Student ID"></v-text-field>
                   <div v-show="btn_show">
                     <v-btn color="success" class="mr-4" @click="validate">送出</v-btn>
@@ -104,7 +104,7 @@ export default {
               this.result_detail_department += response.body.detail.grade
             }
             else if(response.body.f == '0'){
-              this.result = '沒繳'
+              this.result = '沒繳或資料輸入錯誤'
             }
             else{
               this.result = response.body.err
