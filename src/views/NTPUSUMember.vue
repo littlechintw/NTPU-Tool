@@ -105,10 +105,10 @@ export default {
             }
             else if(response.body.f == '0'){
               this.result = '沒繳或資料輸入錯誤'
-              this.result_detail_time = '',
-              this.result_detail_id = '',
-              this.result_detail_name = '',
-              this.result_detail_department = '',
+              this.result_detail_time = ''
+              this.result_detail_id = ''
+              this.result_detail_name = ''
+              this.result_detail_department = ''
             }
             else{
               this.result = response.body.err
