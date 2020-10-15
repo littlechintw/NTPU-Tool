@@ -8,6 +8,10 @@ import Vuetify from 'vuetify/lib'
 
 Vue.config.productionTip = false
 
+// global config
+import global_ from './components/Global.vue'
+Vue.prototype.GLOBAL = global_
+
 // QRcode gnerator
 import VueQRCodeComponent from 'vue-qrcode-component'
 Vue.component('qr-code', VueQRCodeComponent)

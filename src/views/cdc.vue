@@ -115,10 +115,12 @@
         </v-container>
       </v-card><br>
       <v-card class="mx-auto" width="344" elevation="5" align="center" justify="center">
-        <!-- <br> -->
+        <br>
         <h2>檢查資料</h2>
         <h7 style="color: gray;">登錄時間: {{ time_get }}</h7><br>
-        <h7 style="color: gray;">UUID: {{ uuid_get }}</h7><br>
+        <h7 style="color: gray;">UUID: {{ uuid_get }}</h7><br><br>
+        <!-- <br><qr-code :text="uuid_get"></qr-code><br> -->
+        <!-- <barcode :value="uuid_get" :options="barcode_option"></barcode> -->
       </v-card>
       <br>
       <h3 style="padding: 3%;"><strong>請停留於本畫面，並交給工作人員查看，或建議使用截圖功能儲存。</strong></h3>
@@ -165,6 +167,13 @@ export default {
     checkbox_law: false,
     final_id: '非北大學生',
     check_color: '#ffffff',
+    barcode_option:{
+        displayValue: false,
+        background: '#fff',
+        width: '100%',
+        height: '20px',
+        fontSize: '0px'
+    },
   }),
 
   methods: {
@@ -186,7 +195,7 @@ export default {
       if(this.$refs.form.validate()){
         // this.error_msg = "載入中..."
         this.btn_show = false
-        let url = 'https://38b3b37dd174.ngrok.io/cdc/enter'
+        let url = this.GLOBAL.api_url + '/cdc/enter'
           this.$http.post(url, {
           uuid: send_id,
           name: this.name,
@@ -224,7 +233,7 @@ export default {
     }
     this.event_id = this.$route.params.id
     this.error_msg = "載入中..."
-    let url = 'https://38b3b37dd174.ngrok.io/cdc/manage'
+    let url = this.GLOBAL.api_url + '/cdc/manage'
     this.$http.post(url, {
       event: this.event_id,
     })

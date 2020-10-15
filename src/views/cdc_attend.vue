@@ -113,7 +113,7 @@ export default {
         this.btn_show = false
         this.loading_show = true
         this.name_list = []
-        let url = 'https://38b3b37dd174.ngrok.io/cdc/access'
+        let url = this.GLOBAL.api_url + '/cdc/access'
         this.$http.post(url, {
           event: this.event_id,
           access_code: this.access_code,
@@ -122,7 +122,7 @@ export default {
           if(response.body.code == "200"){
             this.error_msg = ""
             this.name_list = response.body.message
-            this.csv_url = 'https://38b3b37dd174.ngrok.io/cdc/access/csv/' + this.event_id + '/' + this.access_code + '/' + Math.random()
+            this.csv_url = this.GLOBAL.api_url + '/cdc/access/csv/' + this.event_id + '/' + this.access_code + '/' + Math.random()
             this.result_show = true
             this.form_show = false
             this.loading_show = false
@@ -140,7 +140,7 @@ export default {
       }
     },
     url_random(){
-      this.csv_url = 'https://38b3b37dd174.ngrok.io/cdc/access/csv/' + this.event_id + '/' + this.access_code + '/' + Math.random()
+      this.csv_url = this.GLOBAL.api_url + '/cdc/access/csv/' + this.event_id + '/' + this.access_code + '/' + Math.random()
     }
   },
 
@@ -153,7 +153,7 @@ export default {
     }
     this.event_id = this.$route.params.id
     this.error_msg = "載入中..."
-    let url = 'https://38b3b37dd174.ngrok.io/cdc/manage'
+    let url = this.GLOBAL.api_url + '/cdc/manage'
     this.$http.post(url, {
       event: this.event_id,
     })
