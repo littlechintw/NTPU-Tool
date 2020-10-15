@@ -52,6 +52,14 @@ Vue.use(VueRouter)
       title: 'NTPU Tool - Real-Name System',
     },
   },
+  {
+    path: '/NTPUSUMember',
+    name: 'SU Member Search',
+    component: () => import('../views/NTPUSUMember.vue'),
+    meta:{
+      title: 'NTPU Tool - SU Member Search',
+    },
+  },
 ]
 
 const router = new VueRouter({
