@@ -38,6 +38,13 @@
           <v-icon left>mdi-download</v-icon> Download .csv
         </v-btn>
       </v-card><br>
+      <v-card class="mx-auto" align="center" justify="center" :color="check_color">
+        <h2>實聯制驗證</h2>
+        <v-btn class="ma-2" rounded color="success" @click="camaraStatus">
+          <v-icon left>mdi-camera</v-icon> 開啟 / 關閉相機
+        </v-btn>
+        <qrcode-stream :camera="camera" @decode="onCameraChange" v-show="camera_show"></qrcode-stream>
+      </v-card><br>
       <v-card class="mx-auto" align="center" justify="center">
         <v-btn class="ma-2" rounded color="" @click="validate">
           <v-icon left>mdi-refresh</v-icon> Refresh
@@ -104,6 +111,8 @@ export default {
     btn_show: true,
     loading_show: false,
     check_color: '#ffffff',
+    camera: 'off',
+    camera_show: false,
   }),
 
   methods: {
@@ -141,7 +150,21 @@ export default {
     },
     url_random(){
       this.csv_url = this.GLOBAL.api_url + '/cdc/access/csv/' + this.event_id + '/' + this.access_code + '/' + Math.random()
-    }
+    },
+    camaraStatus(){
+      if(this.camera == 'off'){
+        this.camera = 'auto'
+        this.camera_show = true
+      }
+      else{
+        this.camera = 'off'
+        this.camera_show = false
+      }
+    },
+    onCameraChange(content){
+      this.search = content
+      this.pauseCamera();
+    },
   },
 
   created: function () {

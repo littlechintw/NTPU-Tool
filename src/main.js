@@ -16,6 +16,10 @@ Vue.prototype.GLOBAL = global_
 import VueQRCodeComponent from 'vue-qrcode-component'
 Vue.component('qr-code', VueQRCodeComponent)
 
+// QRcode reader
+import VueQrcodeReader from "vue-qrcode-reader";
+Vue.use(VueQrcodeReader);
+
 // barcode generator
 import VueBarcode from 'vue-barcode'
 Vue.component('barcode', VueBarcode)

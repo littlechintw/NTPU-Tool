@@ -115,10 +115,10 @@
         </v-container>
       </v-card><br>
       <v-card class="mx-auto" width="344" elevation="5" align="center" justify="center">
-        <br>
         <h2>檢查資料</h2>
         <h7 style="color: gray;">登錄時間: {{ time_get }}</h7><br>
         <h7 style="color: gray;">UUID: {{ uuid_get }}</h7><br><br>
+        <qr-code :text="qrcode_data" size="100" error-level="L"></qr-code><br>
         <!-- <br><qr-code :text="uuid_get"></qr-code><br> -->
         <!-- <barcode :value="uuid_get" :options="barcode_option"></barcode> -->
       </v-card>
@@ -174,6 +174,7 @@ export default {
         height: '20px',
         fontSize: '0px'
     },
+    qrcode_data: 'error',
   }),
 
   methods: {
@@ -207,6 +208,7 @@ export default {
             this.error_msg = ""
             this.uuid_get = response.body.message.uuid
             this.time_get = response.body.message.timestamp
+            this.qrcode_data = response.body.message.uuid.substring(0,6)
             this.result_show = true
             this.form_show = false
           }
