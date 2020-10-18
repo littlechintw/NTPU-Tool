@@ -163,7 +163,6 @@ export default {
     },
     onCameraChange(content){
       this.search = content
-      this.pauseCamera();
     },
   },
 

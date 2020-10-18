@@ -28,9 +28,10 @@
                   <!-- <p style="font-size: 10px;">如非在校學生，請在學號欄位輸入 000000000</p> -->
                   <v-text-field v-model="name" :rules="idName" label="姓名 / Name" required></v-text-field>
                   <v-text-field v-model="phone" :rules="idPhone" type="number" label="電話 / Phone" required></v-text-field>
-                  <v-checkbox v-model="checkbox_law" :rules="[v => !!v || 'You must agree to continue!']" label="本人已閱讀說明並願意提供資料，且以上所有資訊正確無誤。" required></v-checkbox>
+                  <v-checkbox v-model="checkbox_law" :rules="[v => !!v || 'You must agree to continue!']" label="本人已完成參加人員健康檢核 (如下)，且確定符合資格。" required></v-checkbox>
+                  <v-checkbox v-model="checkbox_law2" :rules="[v => !!v || 'You must agree to continue!']" label="本人已閱讀以下說明並願意提供資料，且以上所有資訊正確無誤。" required></v-checkbox>
                   <div v-show="btn_show">
-                    <v-btn :disabled="!checkbox_law" color="success" class="mr-4" @click="validate">送出</v-btn>
+                    <v-btn :disabled="!(checkbox_law&&checkbox_law2)" color="success" class="mr-4" @click="validate">送出</v-btn>
                   </div>
                   <div v-show="!btn_show">
                     <v-progress-circular indeterminate color="primary"></v-progress-circular>
@@ -40,6 +41,20 @@
               </v-row>
             </v-col>
           </v-row>
+        </v-container>
+      </v-card><br>
+      <v-card class="mx-auto" width="344" :disabled="!init" :loading="!init">
+        <v-container fluid style="text-align: center;width:87%;">
+          <p style="font-size: 16px;">參加人員健康檢核</p>
+          <p style="font-size: 12px;">
+            1. 本人非臺灣疾管署具感染風險民眾追蹤管理機制之對象 (居家隔離/居家檢疫/自主健康管理)；另未與前述對象接觸或同居。
+          </p>
+          <p style="font-size: 12px;">
+            2. 未有疑似呼吸道不適症狀 (咳嗽/流鼻水/鼻塞/喉嚨痛/呼吸喘)，且未發燒 (額溫 &lt; 37.5°C、耳溫 &lt; 38°C)。
+          </p>
+          <p style="font-size: 12px;"> 
+            3. 參加本活動為個人自主意願。
+          </p>
         </v-container>
       </v-card><br>
       <v-card class="mx-auto" width="344" :disabled="!init" :loading="!init">
@@ -165,6 +180,7 @@ export default {
     summit_open: false,
     btn_show: true,
     checkbox_law: false,
+    checkbox_law2: false,
     final_id: '非北大學生',
     check_color: '#ffffff',
     barcode_option:{
