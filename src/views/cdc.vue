@@ -142,6 +142,7 @@
     </div>
     <div class="form" v-show="error_page">
       <h2 style="color: red;">{{ error_msg }}</h2>
+      <a :href="error_form" v-show="error_form_show">填寫備援表單</a>
     </div>
   </div>
 </template>
@@ -181,6 +182,7 @@ export default {
     btn_show: true,
     checkbox_law: false,
     checkbox_law2: false,
+    error_form_show: false,
     final_id: '非北大學生',
     check_color: '#ffffff',
     barcode_option:{
@@ -191,6 +193,7 @@ export default {
         fontSize: '0px'
     },
     qrcode_data: 'error',
+    error_form: 'https://docs.google.com/forms/d/e/1FAIpQLSfR9BegTco0pWXGzODGDPWRK00esN7YwhNKrrYVvPEJkA-bWg/viewform?usp=pp_url&entry.792297305=',
   }),
 
   methods: {
@@ -274,7 +277,12 @@ export default {
     .catch(() => {
       this.event_title = "error..."
       this.agency = "error..."
-      this.error_msg = "無法載入，請重新載入"
+      this.error_msg = "與後端伺服器斷開，請確認此網址是否正確，並打開以下表單填寫。"
+      this.error_form += this.$route.params.id
+      this.error_form_show = true
+      this.result_show = false
+      this.form_show = false
+      this.error_page = true
       console.log('Got some errors!!')
     })
   }
