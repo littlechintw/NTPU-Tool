@@ -68,6 +68,14 @@ Vue.use(VueRouter)
       title: 'NTPU Tool - SU Member Search',
     },
   },
+  {
+    path: '/NTPUSUconcert_verify',
+    name: 'SU Concert Verify',
+    component: () => import('../views/NTPUSUconcert_verify.vue'),
+    meta:{
+      title: 'NTPU Tool - SU Concert Verify',
+    },
+  },
 ]
 
 const router = new VueRouter({
