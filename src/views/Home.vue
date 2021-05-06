@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <br />
     <v-container fluid>
       <v-row>
         <v-col cols="12">
@@ -14,6 +15,7 @@
     </v-container>
     <div class="form" v-show="form_show">
       <v-card class="mx-auto" width="344">
+        <br />
         <v-container fluid>
           <v-row>
             <v-col cols="12">
@@ -59,10 +61,12 @@
             </v-col>
           </v-row>
         </v-container>
+        <br />
       </v-card>
     </div>
     <div class="qrcode" v-show="qrcode_show">
       <v-card class="mx-auto" width="344" elevation="5">
+        <br />
         <v-container fluid>
           <v-row>
             <v-col cols="12" align="center">
@@ -81,6 +85,7 @@
             </v-col>
           </v-row>
         </v-container>
+        <br />
       </v-card>
       <br />
       <v-card
@@ -120,7 +125,7 @@
         </v-container>
       </v-card>
       <br />
-      <v-card class="mx-auto" width="344" elevation="5">
+      <v-card class="mx-auto" width="344" elevation="0">
         <v-container fluid>
           <v-row>
             <v-col cols="12" align="center">
@@ -134,6 +139,7 @@
         </v-container>
       </v-card>
     </div>
+    <br />
   </div>
 </template>
 
@@ -218,3 +224,10 @@ export default {
   },
 };
 </script>
+
+<style>
+.home {
+  margin-left: 20pt;
+  margin-right: 20pt;
+}
+</style>
