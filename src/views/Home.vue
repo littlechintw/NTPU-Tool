@@ -9,6 +9,10 @@
               <strong>警告！</strong>
               勿使用他人個資，衍生之法律問題請自行負責，伺服器亦不會記錄任何資訊。
             </v-alert>
+            <v-alert dense outlined type="warning">
+              <strong>警告！</strong>
+              疫情已愈加嚴重，請注意咳嗽禮節，戴好口罩，並關心 Taiwan CDC 所發佈之最新消息！並建議下載「臺灣社交距離」並打開藍牙、開啟追蹤，以保護自身與他人安全。
+            </v-alert>
           </v-row>
         </v-col>
       </v-row>
