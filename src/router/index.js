@@ -3,11 +3,11 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-  const routes = [
+const routes = [
   {
     path: '/',
     name: 'Home',
-    component: () => import('../views/Home.vue'),
+    component: () => import('../views/HomeView.vue'),
     meta:{
       title: 'NTPU Tool - Code',
     },
@@ -15,65 +15,17 @@ Vue.use(VueRouter)
   {
     path: '/about',
     name: 'About',
-    component: () => import('../views/About.vue'),
+    component: () => import('../views/AboutView.vue'),
     meta:{
       title: 'NTPU Tool - About',
     },
   },
   {
-    path: '/admin',
-    name: 'Admin',
-    component: () => import('../views/Admin.vue'),
+    path: '/TaiwanSocialDistancing',
+    name: 'About',
+    component: () => import('../views/TaiwanSocialDistancing.vue'),
     meta:{
-      title: 'NTPU Tool - Admin',
-    },
-  },
-  {
-    path: '/dorm',
-    name: 'Dorm',
-    component: () => import('../views/Dorm.vue'),
-    meta:{
-      title: 'NTPU Tool - Dorm',
-    },
-  },
-  {
-    path: '/cdc',
-    name: 'Real-Name System',
-    component: () => import('../views/cdc_description.vue'),
-    meta:{
-      title: 'NTPU Tool - Real-Name System',
-    },
-  },
-  {
-    path: '/cdc/:id?',
-    name: 'Real-Name System',
-    component: () => import('../views/cdc.vue'),
-    meta:{
-      title: 'NTPU Tool - Real-Name System',
-    },
-  },
-  {
-    path: '/cdc/:id?/attend',
-    name: 'Real-Name System',
-    component: () => import('../views/cdc_attend.vue'),
-    meta:{
-      title: 'NTPU Tool - Real-Name System',
-    },
-  },
-  {
-    path: '/NTPUSUMember',
-    name: 'SU Member Search',
-    component: () => import('../views/NTPUSUMember.vue'),
-    meta:{
-      title: 'NTPU Tool - SU Member Search',
-    },
-  },
-  {
-    path: '/NTPUSUconcert_verify',
-    name: 'SU Concert Verify',
-    component: () => import('../views/NTPUSUconcert_verify.vue'),
-    meta:{
-      title: 'NTPU Tool - SU Concert Verify',
+      title: 'NTPU Tool - Taiwan Social Distancing',
     },
   },
 ]
@@ -92,4 +44,3 @@ router.beforeEach((to, from, next) => {
 })
 
 export default router
-
