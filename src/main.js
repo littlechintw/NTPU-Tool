@@ -8,10 +8,6 @@ import vuetify from './plugins/vuetify'
 
 Vue.config.productionTip = false
 
-// // QRcode gnerator
-// import VueQRCodeComponent from 'vue-qrcode-component'
-// Vue.component('qr-code', VueQRCodeComponent)
-
 // barcode generator
 import VueBarcode from 'vue-barcode'
 Vue.component('VueBarcode', VueBarcode)
@@ -28,9 +24,9 @@ Vue.use(VueAnalytics, {
   checkDuplicatedScript: true
 })
 
-// Vue-Resource
-import VueResource from 'vue-resource';
-Vue.use(VueResource);
+// axios
+import axios from 'axios'
+Vue.prototype.$axios = axios
 
 new Vue({
   router,

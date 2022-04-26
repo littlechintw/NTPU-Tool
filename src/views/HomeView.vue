@@ -5,12 +5,16 @@
       <v-row>
         <v-col cols="12">
           <v-row align="center" justify="center" length>
+            <v-alert dense outlined>
+              <strong>公告！</strong>
+              從現在開始，您可以參訪 <a href="../covid">防疫數據</a> 頁面，查看最新北大防疫數據。
+            </v-alert>
             <v-alert dense outlined type="error">
               <strong>警告！</strong>
               勿使用他人個資，衍生之法律問題請自行負責，伺服器亦不會記錄任何資訊。
             </v-alert>
             <v-alert dense outlined type="warning">
-              <strong>警告！</strong>
+              <strong>注意！</strong>
               請關注 Taiwan CDC 所發佈之最新消息，且建議下載「<a href="../TaiwanSocialDistancing">臺灣社交距離</a>」，打開藍牙、開啟追蹤，以保護自身與他人安全。
             </v-alert>
           </v-row>
@@ -191,29 +195,6 @@ export default {
       this.dorm_status = "載入中...";
       this.dorm_status_data_detail = "";
       this.dorm_status_data_detail_url = "";
-    },
-    get_dorm_status() {
-      console.log("You just sent a request to get dorm status!");
-      let url = "https://ntpu.herokuapp.com/dorm/detail";
-      this.$http
-        .post(url, { user_id: this.id })
-        .then((response) => {
-          if (response.body.message.status_code == "1") {
-            this.dorm_status = response.body.message.status;
-            this.dorm_status_data_detail = response.body.message.data_detail;
-            this.dorm_status_data_detail_url =
-              response.body.message.data_detail_url;
-          } else if (response.body.message.status_code == "0") {
-            this.dorm_status = response.body.message.status;
-            this.dorm_status_data_detail = response.body.message.data_detail;
-            this.dorm_status_data_detail_url =
-              response.body.message.data_detail_url;
-          } else this.dorm_status = "存取時發生錯誤";
-        })
-        .catch(() => {
-          this.dorm_status = "無法載入";
-          console.log("Got some errors!!");
-        });
     },
   },
   created: function () {

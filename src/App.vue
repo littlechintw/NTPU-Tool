@@ -11,6 +11,10 @@
         <v-icon>home</v-icon>
       </v-btn>
 
+      <v-btn href="covid" icon>
+        <v-icon>mdi-database</v-icon>
+      </v-btn>
+
       <v-btn href="about" icon>
         <v-icon>help_outline</v-icon>
       </v-btn>
