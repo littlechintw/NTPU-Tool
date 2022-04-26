@@ -80,9 +80,9 @@
               <v-row align="center" justify="center" length>
                 <br />
               </v-row>
-              <v-row align="center" justify="center" length>
-                <qr-code :text="id"></qr-code>
-              </v-row>
+              <!-- <v-row align="center" justify="center" length>
+                <vue-qrcode :text="id"></vue-qrcode>
+              </v-row> -->
               <v-row align="center" justify="center" length>
                 <VueBarcode :value="id" :options="barcode_option"></VueBarcode>
               </v-row>

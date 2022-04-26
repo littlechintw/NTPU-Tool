@@ -8,9 +8,9 @@ import vuetify from './plugins/vuetify'
 
 Vue.config.productionTip = false
 
-// QRcode gnerator
-import VueQRCodeComponent from 'vue-qrcode-component'
-Vue.component('qr-code', VueQRCodeComponent)
+// // QRcode gnerator
+// import VueQRCodeComponent from 'vue-qrcode-component'
+// Vue.component('qr-code', VueQRCodeComponent)
 
 // barcode generator
 import VueBarcode from 'vue-barcode'
