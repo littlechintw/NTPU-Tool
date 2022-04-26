@@ -4,3 +4,9 @@ module.exports = defineConfig({
     'vuetify'
   ]
 })
+
+module.exports = {
+  pwa: {
+    name: 'NTPU Tool',
+  }
+}
