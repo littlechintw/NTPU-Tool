@@ -3,32 +3,22 @@ import Vue from 'vue'
 import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
+import store from './store'
 import vuetify from './plugins/vuetify'
-import Vuetify from 'vuetify/lib'
 
 Vue.config.productionTip = false
-
-// global config
-import global_ from './components/Global.vue'
-Vue.prototype.GLOBAL = global_
 
 // QRcode gnerator
 import VueQRCodeComponent from 'vue-qrcode-component'
 Vue.component('qr-code', VueQRCodeComponent)
 
-// QRcode reader
-import VueQrcodeReader from "vue-qrcode-reader";
-Vue.use(VueQrcodeReader);
-
 // barcode generator
 import VueBarcode from 'vue-barcode'
-Vue.component('barcode', VueBarcode)
+Vue.component('VueBarcode', VueBarcode)
 
 // cookies
 import VueCookie from 'vue-cookie'
 Vue.use(VueCookie)
-
-Vue.use(Vuetify)
 
 // GA
 import VueAnalytics from 'vue-analytics'
@@ -44,11 +34,13 @@ Vue.use(VueResource);
 
 new Vue({
   router,
+  store,
   vuetify,
   render: h => h(App)
 }).$mount('#app')
 
-export default new Vuetify({
+Vue.use(vuetify)
+export default new vuetify({
   icons: {
     iconfont: 'md',
   },
