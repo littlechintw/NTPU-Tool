@@ -217,10 +217,6 @@ export default {
     },
   },
   created: function () {
-    if (window.location.href.indexOf("netlify.app")) {
-      console.log("You are in Netlify!");
-      window.location.href = "https://ntpu-tool.littlechin.tw/"
-    }
     console.log(window.location.href)
     if (this.$cookie.get("userid")) {
       this.id = this.$cookie.get("userid");
