@@ -2,6 +2,7 @@
   <div class="home">
     <br />
     <h1>Covid-19 in NTPU</h1>
+    <h5>Data from: <a href="http://lms.ntpu.edu.tw/board.php?courseID=50180&f=news" target="_bland">北大防疫專區</a></h5>
     <h3 style="color: red">{{ data_loading }}</h3>
     <v-divider />
     <br />
