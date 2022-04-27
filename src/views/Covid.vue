@@ -178,10 +178,10 @@
                 <v-container fluid>
                   <v-row>
                     <v-col cols="12">
-                      <v-row align="center" justify="center" length v-if="!selfHealthManagementPublic">
+                      <v-row align="center" justify="center" length v-if="selfHealthManagementPublic">
                         <h1>{{ cdc_data_tidy.selfHealthManagementTotal }}</h1>
                       </v-row>
-                      <v-row align="center" justify="center" length v-if="selfHealthManagementPublic">
+                      <v-row align="center" justify="center" length v-if="!selfHealthManagementPublic">
                         <h3 style="color: red; padding: 10px"><strong>校方未公開</strong></h3>
                       </v-row>
                       <v-row align="center" justify="center" length>
