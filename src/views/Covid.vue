@@ -351,7 +351,9 @@ export default {
           this.cdc_data = resp.data;
           console.log('SHOW');
           console.log(this.cdc_data);
-          this.data_loading = "Updated: " + this.cdc_data[this.cdc_data.length-1].dataTimestamp;
+          // const updateTimestamp = Date.parse(this.cdc_data[0].dataTimestamp) + (8*60*60*1000);
+          const updateTimestamp = new Date(this.cdc_data[0].dataTimestamp);
+          this.data_loading = "Updated: " + updateTimestamp;
           this.tidy_cdc_data()
         })
         .catch((err) => {
