@@ -71,23 +71,6 @@
 
     <br />
 
-    <v-card class="mx-auto" width="80%">
-      <LineChartGenerator
-        :chart-options="chartOptions"
-        :chart-data="chartData"
-        :chart-id="chartId"
-        :dataset-id-key="datasetIdKey"
-        :plugins="plugins"
-        :css-classes="cssClasses"
-        :styles="styles"
-        :width="width"
-        :height="height"
-        position="relative"
-      />
-    </v-card>
-
-    <br />
-
     <v-card class="mx-auto" width="80%" color="#F7AD76">
       <br />
       <v-container fluid>
@@ -148,6 +131,23 @@
           </v-col>
         </v-row>
       </v-container>
+    </v-card>
+
+    <br />
+
+    <v-card class="mx-auto" width="80%">
+      <LineChartGenerator
+        :chart-options="chartOptions"
+        :chart-data="chartData"
+        :chart-id="chartId"
+        :dataset-id-key="datasetIdKey"
+        :plugins="plugins"
+        :css-classes="cssClasses"
+        :styles="styles"
+        :width="width"
+        :height="height"
+        position="relative"
+      />
     </v-card>
 
     <br />
@@ -351,7 +351,7 @@ export default {
           this.cdc_data = resp.data;
           console.log('SHOW');
           console.log(this.cdc_data);
-          this.data_loading = "";
+          this.data_loading = "Updated: " + this.cdc_data[this.cdc_data.length-1].dataTimestamp;
           this.tidy_cdc_data()
         })
         .catch((err) => {
