@@ -13,7 +13,7 @@
         <v-row>
           <v-col cols="12">
             <v-row align="center" justify="center" length>
-              <h0>{{ cdc_data_tidy.newestConfirmedCase }}</h0>
+              <h0>+ {{ cdc_data_tidy.newestConfirmedCase }}</h0>
             </v-row>
             <v-row align="center" justify="center" length>
               <h4>{{ cdc_data_tidy.newestConfirmedCaseDate }} 確診人數</h4>
@@ -35,7 +35,7 @@
                   <v-row>
                     <v-col cols="12">
                       <v-row align="center" justify="center" length>
-                        <h1>{{ cdc_data_tidy.newestConfirmedCaseSanxia }}</h1>
+                        <h1>+ {{ cdc_data_tidy.newestConfirmedCaseSanxia }}</h1>
                       </v-row>
                       <v-row align="center" justify="center" length>
                         <h3>三峽</h3>
@@ -52,7 +52,7 @@
                   <v-row>
                     <v-col cols="12">
                       <v-row align="center" justify="center" length>
-                        <h1>{{ cdc_data_tidy.newestConfirmedCaseTaipei }}</h1>
+                        <h1>+ {{ cdc_data_tidy.newestConfirmedCaseTaipei }}</h1>
                       </v-row>
                       <v-row align="center" justify="center" length>
                         <h3>臺北</h3>
@@ -67,6 +67,23 @@
           </v-col>
         </v-row>
       </v-container>
+    </v-card>
+
+    <br />
+
+    <v-card class="mx-auto" width="80%">
+      <LineChartGenerator
+        :chart-options="chartOptions"
+        :chart-data="chartData"
+        :chart-id="chartId"
+        :dataset-id-key="datasetIdKey"
+        :plugins="plugins"
+        :css-classes="cssClasses"
+        :styles="styles"
+        :width="width"
+        :height="height"
+        position="relative"
+      />
     </v-card>
 
     <br />
@@ -152,7 +169,10 @@
                         <h1>{{ cdc_data_tidy.isolateTotal }}</h1>
                       </v-row>
                       <v-row align="center" justify="center" length>
-                        <h3>{{ cdc_data_tidy.newestConfirmedCaseDate }} 居家隔離</h3>
+                        <h3>{{ cdc_data_tidy.newestConfirmedCaseDate }}</h3>
+                      </v-row>
+                      <v-row align="center" justify="center" length>
+                        <h3>居家隔離</h3>
                       </v-row>
                     </v-col>
                   </v-row>
@@ -165,11 +185,17 @@
                 <v-container fluid>
                   <v-row>
                     <v-col cols="12">
-                      <v-row align="center" justify="center" length>
+                      <v-row align="center" justify="center" length v-if="!cdc_data_tidy.selfHealthManagementTotal.indexOf('校方未公開')">
                         <h1>{{ cdc_data_tidy.selfHealthManagementTotal }}</h1>
                       </v-row>
+                      <v-row align="center" justify="center" length v-if="cdc_data_tidy.selfHealthManagementTotal.indexOf('校方未公開')">
+                        <h2 style="color: red; padding: 6px"><strong>校方未公開</strong></h2>
+                      </v-row>
                       <v-row align="center" justify="center" length>
-                        <h3>{{ cdc_data_tidy.newestConfirmedCaseDate }} 自主健康管理</h3>
+                        <h3>{{ cdc_data_tidy.newestConfirmedCaseDate }}</h3>
+                      </v-row>
+                      <v-row align="center" justify="center" length>
+                        <h3>自主健康管理</h3>
                       </v-row>
                     </v-col>
                   </v-row>
@@ -203,13 +229,69 @@
 </template>
 
 <script>
+import { Line as LineChartGenerator } from 'vue-chartjs/legacy'
+
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  LineElement,
+  LinearScale,
+  CategoryScale,
+  PointElement
+} from 'chart.js'
+
+ChartJS.register(
+  Title,
+  Tooltip,
+  Legend,
+  LineElement,
+  LinearScale,
+  CategoryScale,
+  PointElement
+)
+
 export default {
   name: "HomeView",
-  components: {},
+  components: {
+    LineChartGenerator
+  },
+  props: {
+    chartId: {
+      type: String,
+      default: 'line-chart'
+    },
+    datasetIdKey: {
+      type: String,
+      default: 'label'
+    },
+    width: {
+      type: Number,
+      default: 400
+    },
+    height: {
+      type: Number,
+      default: 300
+    },
+    cssClasses: {
+      default: '',
+      type: String
+    },
+    styles: {
+      type: Object,
+      default: () => {}
+    },
+    plugins: {
+      type: Array,
+      default: () => []
+    }
+  },
   data() {
     return {
       data_loading: "Loading data...",
       cdc_data: [],
+      cdc_graph_list: [1, 3, 4],
       headers: [
         { text: '時間', value: 'date', align: 'center' },
         { text: '總確診', value: 'confirmedCase.total', align: 'center' },
@@ -236,6 +318,25 @@ export default {
         'newestConfirmedCaseDate': '',
         'isolateTotal': 0,
         'selfHealthManagementTotal': 0,
+      },
+      chartData: {
+        labels: [],
+        datasets: [
+          {
+            label: '公告確診數',
+            backgroundColor: '#F77676',
+            data: []
+          },
+          {
+            label: '公告總確診數',
+            backgroundColor: '#F7AD76',
+            data: []
+          }
+        ]
+      },
+      chartOptions: {
+        responsive: true,
+        maintainAspectRatio: false
       }
     };
   },
@@ -270,17 +371,31 @@ export default {
         'isolateTotal': 0,
         'selfHealthManagementTotal': 0,
       }
+      this.cdc_graph_list = []
+      this.chartData.labels = []
+      this.chartData.datasets[0].data = []
+      this.chartData.datasets[1].data = []
+      
       this.cdc_data_tidy.newestConfirmedCaseDate = this.cdc_data[0].date;
       this.cdc_data_tidy.newestConfirmedCase = this.cdc_data[0].confirmedCase.total;
       this.cdc_data_tidy.newestConfirmedCaseTaipei = this.cdc_data[0].confirmedCase.zoneDetail.Taipei;
       this.cdc_data_tidy.newestConfirmedCaseSanxia = this.cdc_data[0].confirmedCase.zoneDetail.Sanxia;
-        this.cdc_data_tidy.isolateTotal += this.cdc_data[0].isolate.studentTotal;
-        this.cdc_data_tidy.isolateTotal += this.cdc_data[0].isolate.teacher;
-        this.cdc_data_tidy.isolateTotal += this.cdc_data[0].isolate.staff;
-        this.cdc_data_tidy.selfHealthManagementTotal += this.cdc_data[0].selfHealthManagement.studentTotal;
-        this.cdc_data_tidy.selfHealthManagementTotal += this.cdc_data[0].selfHealthManagement.teacher;
-        this.cdc_data_tidy.selfHealthManagementTotal += this.cdc_data[0].selfHealthManagement.staff;
-      for (var i=0;i<this.cdc_data.length;i++) {
+      
+      this.cdc_data_tidy.isolateTotal += this.cdc_data[0].isolate.studentTotal;
+      this.cdc_data_tidy.isolateTotal += this.cdc_data[0].isolate.teacher;
+      this.cdc_data_tidy.isolateTotal += this.cdc_data[0].isolate.staff;
+      
+      this.cdc_data_tidy.selfHealthManagementTotal += this.cdc_data[0].selfHealthManagement.studentTotal;
+      this.cdc_data_tidy.selfHealthManagementTotal += this.cdc_data[0].selfHealthManagement.teacher;
+      this.cdc_data_tidy.selfHealthManagementTotal += this.cdc_data[0].selfHealthManagement.staff;
+
+      var addDataTmp = 0;
+      for (var i=this.cdc_data.length-1;i>=0;i--) {
+        this.chartData.labels.push(this.cdc_data[i].date);
+        this.chartData.datasets[0].data.push(this.cdc_data[i].confirmedCase.total)
+        addDataTmp += this.cdc_data[i].confirmedCase.total;
+        this.chartData.datasets[1].data.push(addDataTmp)
+        
         this.cdc_data_tidy.confirmedCase += this.cdc_data[i].confirmedCase.total;
         this.cdc_data_tidy.confirmedCaseTaipei += this.cdc_data[i].confirmedCase.zoneDetail.Taipei;
         this.cdc_data_tidy.confirmedCaseSanxia += this.cdc_data[i].confirmedCase.zoneDetail.Sanxia;
