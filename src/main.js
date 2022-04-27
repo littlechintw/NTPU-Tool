@@ -24,6 +24,10 @@ Vue.use(VueAnalytics, {
   checkDuplicatedScript: true
 })
 
+// vue-google-charts
+import VueGoogleCharts from 'vue-google-charts'
+Vue.use(VueGoogleCharts)
+
 // axios
 import axios from 'axios'
 Vue.prototype.$axios = axios
@@ -36,8 +40,8 @@ new Vue({
 }).$mount('#app')
 
 Vue.use(vuetify)
-export default new vuetify({
-  icons: {
-    iconfont: 'md',
-  },
-})
+// export default new vuetify({
+//   icons: {
+//     iconfont: 'md',
+//   },
+// })
