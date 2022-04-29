@@ -234,17 +234,17 @@ export default {
       cdc_data: [],
       headers: [
         { text: '時間', value: 'date', align: 'center' },
-        { text: '總確診', value: 'confirmedCase.total', align: 'center' },
+        { text: '確診', value: 'confirmedCase.total', align: 'center' },
         { text: '確診 - 臺北', value: 'confirmedCase.zoneDetail.Taipei', align: 'center' },
         { text: '確診 - 三峽', value: 'confirmedCase.zoneDetail.Sanxia', align: 'center' },
         { text: '居家隔離 - 學生', value: 'isolate.studentTotal', align: 'center' },
-        { text: '居家隔離 - 學生 - 臺北', value: 'isolate.studentZoneDetail.Taipei' },
-        { text: '居家隔離 - 學生 - 三峽', value: 'isolate.studentZoneDetail.Sanxia' },
+        { text: '居家隔離 - 學生 - 臺北', value: 'isolate.studentZoneDetail.Taipei', align: 'center' },
+        { text: '居家隔離 - 學生 - 三峽', value: 'isolate.studentZoneDetail.Sanxia', align: 'center' },
         { text: '居家隔離 - 老師', value: 'isolate.teacher', align: 'center' },
         { text: '居家隔離 - 職員', value: 'isolate.staff', align: 'center' },
         { text: '自主健康管理 - 學生	', value: 'selfHealthManagement.studentTotal', align: 'center' },
-        { text: '自主健康管理 - 學生 - 臺北', value: 'selfHealthManagement.studentZoneDetail.Taipei' },
-        { text: '自主健康管理 - 學生 - 三峽', value: 'selfHealthManagement.studentZoneDetail.Sanxia' },
+        { text: '自主健康管理 - 學生 - 臺北', value: 'selfHealthManagement.studentZoneDetail.Taipei', align: 'center' },
+        { text: '自主健康管理 - 學生 - 三峽', value: 'selfHealthManagement.studentZoneDetail.Sanxia', align: 'center' },
         { text: '自主健康管理 - 老師', value: 'selfHealthManagement.teacher', align: 'center' },
         { text: '自主健康管理 - 職員', value: 'selfHealthManagement.staff', align: 'center' },
       ],
@@ -303,7 +303,7 @@ export default {
         'selfHealthManagementTotal': 0,
       }
       this.cdc_graph_list = []
-      this.chartData = [["日期", "確診數", "總確診數"]]
+      this.chartData = [["日期", "確診", "確診累積"]]
       
       this.cdc_data_tidy.newestConfirmedCaseDate = this.cdc_data[0].date;
       this.cdc_data_tidy.newestConfirmedCase = this.cdc_data[0].confirmedCase.total;
