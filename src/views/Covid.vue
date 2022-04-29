@@ -3,7 +3,7 @@
     <br />
     <h1>Covid-19 @NTPU</h1>
     <h5>Data from: <a href="http://lms.ntpu.edu.tw/board.php?courseID=50180&f=news" target="_bland">北大防疫專區</a> （資料依校方公告為主）</h5>
-    <h3 style="color: red">{{ data_loading }}</h3>
+    <h4 style="color: red">{{ data_loading }}</h4>
     <v-divider />
     <br />
 
@@ -81,6 +81,9 @@
             </v-row>
             <v-row align="center" justify="center" length>
               <h4>已公告總確診人數</h4>
+            </v-row>
+            <v-row align="center" justify="center" length>
+              <h5 style="color: gray">未包含無公布數據</h5>
             </v-row>
           </v-col>
         </v-row>
