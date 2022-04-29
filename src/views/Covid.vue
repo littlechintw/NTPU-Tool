@@ -252,15 +252,15 @@ export default {
         { text: '自主健康管理 - 職員', value: 'selfHealthManagement.staff', align: 'center' },
       ],
       cdc_data_tidy: {
-        'confirmedCase': 0,
-        'confirmedCaseTaipei': 0,
-        'confirmedCaseSanxia': 0,
-        'newestConfirmedCase': 0,
-        'newestConfirmedCaseTaipei': 0,
-        'newestConfirmedCaseSanxia': 0,
+        'confirmedCase': 'N/A',
+        'confirmedCaseTaipei': 'N/A',
+        'confirmedCaseSanxia': 'N/A',
+        'newestConfirmedCase': 'N/A',
+        'newestConfirmedCaseTaipei': 'N/A',
+        'newestConfirmedCaseSanxia': 'N/A',
         'newestConfirmedCaseDate': '',
-        'isolateTotal': 0,
-        'selfHealthManagementTotal': 0,
+        'isolateTotal': 'N/A',
+        'selfHealthManagementTotal': 'N/A',
       },
       chartData: [],
       chartOptions: {
@@ -294,7 +294,7 @@ export default {
         });
     },
     tidy_cdc_data() {
-      this.cdc_data_tidy = {
+      var tmp_cdc_data_tidy = {
         'confirmedCase': 0,
         'confirmedCaseTaipei': 0,
         'confirmedCaseSanxia': 0,
@@ -308,23 +308,23 @@ export default {
       this.cdc_graph_list = []
       this.chartData = [["日期", "確診", "確診累積"]]
       
-      this.cdc_data_tidy.newestConfirmedCaseDate = this.cdc_data[0].date;
-      this.cdc_data_tidy.newestConfirmedCase = this.cdc_data[0].confirmedCase.total;
-      this.cdc_data_tidy.newestConfirmedCaseTaipei = this.cdc_data[0].confirmedCase.zoneDetail.Taipei;
-      this.cdc_data_tidy.newestConfirmedCaseSanxia = this.cdc_data[0].confirmedCase.zoneDetail.Sanxia;
+      tmp_cdc_data_tidy.newestConfirmedCaseDate = this.cdc_data[0].date;
+      tmp_cdc_data_tidy.newestConfirmedCase = this.cdc_data[0].confirmedCase.total;
+      tmp_cdc_data_tidy.newestConfirmedCaseTaipei = this.cdc_data[0].confirmedCase.zoneDetail.Taipei;
+      tmp_cdc_data_tidy.newestConfirmedCaseSanxia = this.cdc_data[0].confirmedCase.zoneDetail.Sanxia;
       
-      this.cdc_data_tidy.isolateTotal += this.cdc_data[0].isolate.studentTotal;
-      this.cdc_data_tidy.isolateTotal += this.cdc_data[0].isolate.teacher;
-      this.cdc_data_tidy.isolateTotal += this.cdc_data[0].isolate.staff;
+      tmp_cdc_data_tidy.isolateTotal += this.cdc_data[0].isolate.studentTotal;
+      tmp_cdc_data_tidy.isolateTotal += this.cdc_data[0].isolate.teacher;
+      tmp_cdc_data_tidy.isolateTotal += this.cdc_data[0].isolate.staff;
       
       if (this.cdc_data[0].selfHealthManagement.studentTotal != "校方未公開") {
-        this.cdc_data_tidy.selfHealthManagementTotal += this.cdc_data[0].selfHealthManagement.studentTotal;
+        tmp_cdc_data_tidy.selfHealthManagementTotal += this.cdc_data[0].selfHealthManagement.studentTotal;
       }
       if (this.cdc_data[0].selfHealthManagement.teacher != "校方未公開") {
-        this.cdc_data_tidy.selfHealthManagementTotal += this.cdc_data[0].selfHealthManagement.teacher;
+        tmp_cdc_data_tidy.selfHealthManagementTotal += this.cdc_data[0].selfHealthManagement.teacher;
       }
       if (this.cdc_data[0].selfHealthManagement.staff != "校方未公開") {
-        this.cdc_data_tidy.selfHealthManagementTotal += this.cdc_data[0].selfHealthManagement.staff;
+        tmp_cdc_data_tidy.selfHealthManagementTotal += this.cdc_data[0].selfHealthManagement.staff;
       }
       if (this.cdc_data[0].selfHealthManagement.studentTotal === "校方未公開" && this.cdc_data[0].selfHealthManagement.teacher === "校方未公開" && this.cdc_data[0].selfHealthManagement.staff === "校方未公開")
         this.selfHealthManagementPublic = false;
@@ -338,10 +338,12 @@ export default {
         chartDataTmp.push(addDataTmp)
         this.chartData.push(chartDataTmp)
         
-        this.cdc_data_tidy.confirmedCase += this.cdc_data[i].confirmedCase.total;
-        this.cdc_data_tidy.confirmedCaseTaipei += this.cdc_data[i].confirmedCase.zoneDetail.Taipei;
-        this.cdc_data_tidy.confirmedCaseSanxia += this.cdc_data[i].confirmedCase.zoneDetail.Sanxia;
+        tmp_cdc_data_tidy.confirmedCase += this.cdc_data[i].confirmedCase.total;
+        tmp_cdc_data_tidy.confirmedCaseTaipei += this.cdc_data[i].confirmedCase.zoneDetail.Taipei;
+        tmp_cdc_data_tidy.confirmedCaseSanxia += this.cdc_data[i].confirmedCase.zoneDetail.Sanxia;
       }
+
+      this.cdc_data_tidy = tmp_cdc_data_tidy
     },
   },
   created: function () {
