@@ -8,7 +8,7 @@
           <v-row align="center" justify="center" length>
             <v-alert dense outlined type="error">
               <strong>警告！</strong>
-              目前資料為當日公告確診數加總，由於行政單位說法不一，本資料僅供參考。另一說法為未痊癒人數，但此會導致數據沒有價值，且根據當下校內狀況，研判為當日確診數，因此校方正式公告前，仍會採用當日加總作為統計。
+              目前資料依照 2022/05/02 之格式發佈，將不再累加確診數，但目前公布之數據與前項數據抗衡，<strong>資料缺乏正確性</strong>，請自行斟酌校方提供資料，所有內容皆已完全顯示於最下方列表，可參考檢視。
             </v-alert>
           </v-row>
         </v-col>
@@ -37,7 +37,7 @@
       </v-container>
       <br />
     </v-card>
-    <v-card class="mx-auto" width="80%" elevation="0">
+    <!-- <v-card class="mx-auto" width="80%" elevation="0">
       <v-container fluid>
         <v-row>
           <v-col cols="12">
@@ -98,7 +98,7 @@
           </v-col>
         </v-row>
       </v-container>
-    </v-card>
+    </v-card> -->
 
     <br />
 
@@ -111,10 +111,7 @@
               <h0>{{ cdc_data_tidy.confirmedCase }}</h0>
             </v-row>
             <v-row align="center" justify="center" length>
-              <h4>已公告總確診人數</h4>
-            </v-row>
-            <v-row align="center" justify="center" length>
-              <h5 style="color: gray">未包含無公布數據</h5>
+              <h4>{{ cdc_data_tidy.newestConfirmedCaseDate }} 公告數據</h4>
             </v-row>
           </v-col>
         </v-row>
@@ -312,6 +309,7 @@ export default {
       cdc_data: [],
       headers: [
         { text: '時間', value: 'date', align: 'center' },
+        { text: '新增確診', value: 'confirmedToday', align: 'center' },
         { text: '確診 - 學生', value: 'confirmedCase.studentTotal', align: 'center' },
         { text: '確診 - 學生 - 臺北', value: 'confirmedCase.studentZoneDetail.Taipei', align: 'center' },
         { text: '確診 - 學生 - 三峽', value: 'confirmedCase.studentZoneDetail.Sanxia', align: 'center' },
@@ -395,27 +393,40 @@ export default {
         'homeQuarantineTotal': 0,
       }
       this.cdc_graph_list = []
-      this.chartData = [["日期", "確診", "確診累積"]]
+      this.chartData = [["日期", "確診"]]
       
       tmp_cdc_data_tidy.newestConfirmedCaseDate = this.cdc_data[0].date;
 
-      tmp_cdc_data_tidy.newestConfirmedCase = this.cdc_data[0].confirmedCase.studentTotal;
+      tmp_cdc_data_tidy.newestConfirmedCase = this.cdc_data[0].confirmedToday;
 
-      if (this.cdc_data[0].confirmedCase.teacher != "校方未公開")
-        tmp_cdc_data_tidy.newestConfirmedCase += this.cdc_data[0].confirmedCase.teacher;
-      if (this.cdc_data[0].confirmedCase.staff != "校方未公開")
-        tmp_cdc_data_tidy.newestConfirmedCase += this.cdc_data[0].confirmedCase.staff;
+      // if (this.cdc_data[0].confirmedCase.teacher != "校方未公開")
+      //   tmp_cdc_data_tidy.newestConfirmedCase += this.cdc_data[0].confirmedCase.teacher;
+      // if (this.cdc_data[0].confirmedCase.staff != "校方未公開")
+      //   tmp_cdc_data_tidy.newestConfirmedCase += this.cdc_data[0].confirmedCase.staff;
 
-      tmp_cdc_data_tidy.newestConfirmedCaseTaipei = this.cdc_data[0].confirmedCase.studentZoneDetail.Taipei;
-      tmp_cdc_data_tidy.newestConfirmedCaseSanxia = this.cdc_data[0].confirmedCase.studentZoneDetail.Sanxia;
-      if (this.cdc_data[0].confirmedCase.teacher != "校方未公開")
-        tmp_cdc_data_tidy.newestConfirmedCaseUndefined += this.cdc_data[0].confirmedCase.teacher;
-      if (this.cdc_data[0].confirmedCase.staff != "校方未公開")
-        tmp_cdc_data_tidy.newestConfirmedCaseUndefined += this.cdc_data[0].confirmedCase.staff;
+      // tmp_cdc_data_tidy.newestConfirmedCaseTaipei = this.cdc_data[0].confirmedCase.studentZoneDetail.Taipei;
+      // tmp_cdc_data_tidy.newestConfirmedCaseSanxia = this.cdc_data[0].confirmedCase.studentZoneDetail.Sanxia;
+      // if (this.cdc_data[0].confirmedCase.teacher != "校方未公開")
+      //   tmp_cdc_data_tidy.newestConfirmedCaseUndefined += this.cdc_data[0].confirmedCase.teacher;
+      // if (this.cdc_data[0].confirmedCase.staff != "校方未公開")
+      //   tmp_cdc_data_tidy.newestConfirmedCaseUndefined += this.cdc_data[0].confirmedCase.staff;
       
       tmp_cdc_data_tidy.isolateTotal += this.cdc_data[0].isolate.studentTotal;
       tmp_cdc_data_tidy.isolateTotal += this.cdc_data[0].isolate.teacher;
       tmp_cdc_data_tidy.isolateTotal += this.cdc_data[0].isolate.staff;
+
+      tmp_cdc_data_tidy.confirmedCase = this.cdc_data[0].confirmedCase.studentTotal;
+      tmp_cdc_data_tidy.confirmedCaseTaipei = this.cdc_data[0].confirmedCase.studentZoneDetail.Taipei;
+      tmp_cdc_data_tidy.confirmedCaseSanxia = this.cdc_data[0].confirmedCase.studentZoneDetail.Sanxia;
+      // tmp_cdc_data_tidy.confirmedCaseUndefined += this.cdc_data[0].confirmedCase.teacher + this.cdc_data[0].confirmedCase.staff;
+      if (this.cdc_data[0].confirmedCase.teacher != "校方未公開") {
+        tmp_cdc_data_tidy.confirmedCaseUndefined += this.cdc_data[0].confirmedCase.teacher;
+        tmp_cdc_data_tidy.confirmedCase += this.cdc_data[0].confirmedCase.teacher;
+      }
+      if (this.cdc_data[0].confirmedCase.staff != "校方未公開") {
+        tmp_cdc_data_tidy.confirmedCaseUndefined += this.cdc_data[0].confirmedCase.staff;
+        tmp_cdc_data_tidy.confirmedCase += this.cdc_data[0].confirmedCase.staff;
+      }
       
       if (this.cdc_data[0].selfHealthManagement.studentTotal != "校方未公開") {
         tmp_cdc_data_tidy.selfHealthManagementTotal += this.cdc_data[0].selfHealthManagement.studentTotal;
@@ -441,35 +452,36 @@ export default {
       if (this.cdc_data[0].homeQuarantine.studentTotal === "校方未公開" && this.cdc_data[0].homeQuarantine.teacher === "校方未公開" && this.cdc_data[0].homeQuarantine.staff === "校方未公開")
         this.homeQuarantinePublic = false;
 
-      var addDataTmp = 0;
+      // var addDataTmp = 0;
       for (var i=this.cdc_data.length-1;i>=0;i--) {
-        var chartDataTmp = []
-        chartDataTmp.push(this.cdc_data[i].date);
-        var tmp_today_confirmedCase = 0;
-        tmp_today_confirmedCase += this.cdc_data[i].confirmedCase.studentTotal;
-        if (this.cdc_data[i].confirmedCase.teacher != "校方未公開")
-          tmp_today_confirmedCase += this.cdc_data[i].confirmedCase.teacher;
-        if (this.cdc_data[i].confirmedCase.staff != "校方未公開")
-          tmp_today_confirmedCase += this.cdc_data[i].confirmedCase.staff;
-        chartDataTmp.push(tmp_today_confirmedCase)
-        addDataTmp += tmp_today_confirmedCase;
-        chartDataTmp.push(addDataTmp)
+        this.chartData.push([this.cdc_data[i].date, this.cdc_data[i].confirmedCase.studentTotal]);
+        // var chartDataTmp = []
+        // chartDataTmp.push(this.cdc_data[i].date);
+        // var tmp_today_confirmedCase = 0;
+        // tmp_today_confirmedCase += this.cdc_data[i].confirmedCase.studentTotal;
+        // if (this.cdc_data[i].confirmedCase.teacher != "校方未公開")
+        //   tmp_today_confirmedCase += this.cdc_data[i].confirmedCase.teacher;
+        // if (this.cdc_data[i].confirmedCase.staff != "校方未公開")
+        //   tmp_today_confirmedCase += this.cdc_data[i].confirmedCase.staff;
+        // chartDataTmp.push(tmp_today_confirmedCase)
+        // addDataTmp += tmp_today_confirmedCase;
+        // chartDataTmp.push(addDataTmp)
 
-        this.chartData.push(chartDataTmp)
+        // this.chartData.push(chartDataTmp)
         
-        tmp_cdc_data_tidy.confirmedCase += this.cdc_data[i].confirmedCase.studentTotal;
-        if (this.cdc_data[i].confirmedCase.teacher != "校方未公開")
-          tmp_cdc_data_tidy.confirmedCase += this.cdc_data[i].confirmedCase.teacher;
-        if (this.cdc_data[i].confirmedCase.staff != "校方未公開")
-          tmp_cdc_data_tidy.confirmedCase += this.cdc_data[i].confirmedCase.staff;
+        // tmp_cdc_data_tidy.confirmedCase += this.cdc_data[i].confirmedCase.studentTotal;
+        // if (this.cdc_data[i].confirmedCase.teacher != "校方未公開")
+        //   tmp_cdc_data_tidy.confirmedCase += this.cdc_data[i].confirmedCase.teacher;
+        // if (this.cdc_data[i].confirmedCase.staff != "校方未公開")
+        //   tmp_cdc_data_tidy.confirmedCase += this.cdc_data[i].confirmedCase.staff;
 
-        tmp_cdc_data_tidy.confirmedCaseTaipei += this.cdc_data[i].confirmedCase.studentZoneDetail.Taipei;
-        tmp_cdc_data_tidy.confirmedCaseSanxia += this.cdc_data[i].confirmedCase.studentZoneDetail.Sanxia;
+        // tmp_cdc_data_tidy.confirmedCaseTaipei += this.cdc_data[i].confirmedCase.studentZoneDetail.Taipei;
+        // tmp_cdc_data_tidy.confirmedCaseSanxia += this.cdc_data[i].confirmedCase.studentZoneDetail.Sanxia;
 
-        if (this.cdc_data[i].confirmedCase.teacher != "校方未公開")
-          tmp_cdc_data_tidy.confirmedCaseUndefined += this.cdc_data[i].confirmedCase.teacher;
-        if (this.cdc_data[i].confirmedCase.staff != "校方未公開")
-          tmp_cdc_data_tidy.confirmedCaseUndefined += this.cdc_data[i].confirmedCase.staff;
+        // if (this.cdc_data[i].confirmedCase.teacher != "校方未公開")
+        //   tmp_cdc_data_tidy.confirmedCaseUndefined += this.cdc_data[i].confirmedCase.teacher;
+        // if (this.cdc_data[i].confirmedCase.staff != "校方未公開")
+        //   tmp_cdc_data_tidy.confirmedCaseUndefined += this.cdc_data[i].confirmedCase.staff;
       }
 
       this.cdc_data_tidy = tmp_cdc_data_tidy
