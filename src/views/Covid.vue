@@ -111,7 +111,7 @@
               <h0>{{ cdc_data_tidy.confirmedCase }}</h0>
             </v-row>
             <v-row align="center" justify="center" length>
-              <h4>{{ cdc_data_tidy.newestConfirmedCaseDate }} 公告數據</h4>
+              <h4>{{ cdc_data_tidy.newestConfirmedCaseDate }} 公告確診</h4>
             </v-row>
           </v-col>
         </v-row>
@@ -195,7 +195,32 @@
     <v-divider />
     <br />
 
+
     <v-card class="mx-auto" width="80%" elevation="0">
+      <v-container fluid>
+        <v-row>
+          <v-col cols="12">
+            <v-row align="center" justify="center" length>
+              <h2>{{ cdc_data_tidy.newestConfirmedCaseDate }}</h2>
+            </v-row>
+            <v-row align="center" justify="center" length>
+              <br />
+            </v-row>
+            <v-row align="center" justify="center" length>
+              <h3> 居家隔離 <strong>{{ cdc_data_tidy.isolateTotal }}</strong> 人</h3>
+            </v-row>
+            <v-row align="center" justify="center" length>
+              <h3> 自主健康管理 <strong>{{ cdc_data_tidy.selfHealthManagementTotal }}</strong> 人</h3>
+            </v-row>
+            <v-row align="center" justify="center" length>
+              <h3> 居家檢疫 <strong>{{ cdc_data_tidy.homeQuarantineTotal }}</strong> 人</h3>
+            </v-row>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-card>
+
+    <!-- <v-card class="mx-auto" width="80%" elevation="0">
       <v-container fluid>
         <v-row>
           <v-col cols="12">
@@ -275,7 +300,7 @@
           </v-col>
         </v-row>
       </v-container>
-    </v-card>
+    </v-card> -->
 
     <br />
     <v-divider />
@@ -438,7 +463,8 @@ export default {
         tmp_cdc_data_tidy.selfHealthManagementTotal += this.cdc_data[0].selfHealthManagement.staff;
       }
       if (this.cdc_data[0].selfHealthManagement.studentTotal === "校方未公開" && this.cdc_data[0].selfHealthManagement.teacher === "校方未公開" && this.cdc_data[0].selfHealthManagement.staff === "校方未公開")
-        this.selfHealthManagementPublic = false;
+        // this.selfHealthManagementPublic = false;
+        tmp_cdc_data_tidy.selfHealthManagementTotal = "校方未公開";
 
       if (this.cdc_data[0].homeQuarantine.studentTotal != "校方未公開") {
         tmp_cdc_data_tidy.homeQuarantineTotal += this.cdc_data[0].homeQuarantine.studentTotal;
@@ -450,7 +476,8 @@ export default {
         tmp_cdc_data_tidy.homeQuarantineTotal += this.cdc_data[0].homeQuarantine.staff;
       }
       if (this.cdc_data[0].homeQuarantine.studentTotal === "校方未公開" && this.cdc_data[0].homeQuarantine.teacher === "校方未公開" && this.cdc_data[0].homeQuarantine.staff === "校方未公開")
-        this.homeQuarantinePublic = false;
+        // this.homeQuarantinePublic = false;
+        tmp_cdc_data_tidy.homeQuarantineTotal = "校方未公開";
 
       // var addDataTmp = 0;
       for (var i=this.cdc_data.length-1;i>=0;i--) {
