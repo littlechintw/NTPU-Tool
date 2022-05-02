@@ -8,7 +8,7 @@
           <v-row align="center" justify="center" length>
             <v-alert dense outlined type="error">
               <strong>警告！</strong>
-              目前資料依照 2022/05/02 之格式發佈，將不再累加確診數，但目前公布之數據與前項數據抗衡，<strong>資料缺乏正確性</strong>，請自行斟酌校方提供資料，所有內容皆已完全顯示於最下方列表，可參考檢視。
+              目前資料依照 2022/05/02 之格式發佈，將不再累加確診數，但目前公布之數據與前項發生衝突，<strong>資料缺乏正確性</strong>，請自行斟酌校方提供資料，所有內容皆已完全顯示於最下方列表，可參考檢視。
             </v-alert>
           </v-row>
         </v-col>
