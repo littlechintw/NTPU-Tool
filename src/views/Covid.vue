@@ -189,17 +189,27 @@
         <v-row>
           <v-col cols="12">
             <v-row align="center" justify="center" length>
+              <v-card class="mx-auto" width="100%" elevation="2" color="#DAF7A6">
+                <v-container fluid>
+                  <v-row>
+                    <v-col cols="12">
+                      <v-row align="center" justify="center" length>
+                        <h2>{{ cdc_data_tidy.newestConfirmedCaseDate }}</h2>
+                      </v-row>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-card>
+            </v-row>
+            <v-row align="center" justify="center" length>
 
-              <v-card class="mx-auto" width="33%" elevation="2" color="#DAF7A6">
+              <v-card class="mx-auto" width="30%" elevation="2" color="#DAF7A6">
                 <br />
                 <v-container fluid>
                   <v-row>
                     <v-col cols="12">
                       <v-row align="center" justify="center" length>
                         <h1>{{ cdc_data_tidy.isolateTotal }}</h1>
-                      </v-row>
-                      <v-row align="center" justify="center" length>
-                        <h3>{{ cdc_data_tidy.newestConfirmedCaseDate }}</h3>
                       </v-row>
                       <v-row align="center" justify="center" length>
                         <h3>居家隔離</h3>
@@ -210,7 +220,7 @@
                 <br />
               </v-card>
 
-              <v-card class="mx-auto" width="34%" elevation="2" color="#DAF7A6">
+              <v-card class="mx-auto" width="40%" elevation="2" color="#DAF7A6">
                 <br />
                 <v-container fluid>
                   <v-row>
@@ -222,9 +232,6 @@
                         <h3 style="color: red; padding: 10px"><strong>校方未公開</strong></h3>
                       </v-row>
                       <v-row align="center" justify="center" length>
-                        <h3>{{ cdc_data_tidy.newestConfirmedCaseDate }}</h3>
-                      </v-row>
-                      <v-row align="center" justify="center" length>
                         <h3>自主健康管理</h3>
                       </v-row>
                     </v-col>
@@ -233,7 +240,7 @@
                 <br />
               </v-card>
 
-              <v-card class="mx-auto" width="33%" elevation="2" color="#DAF7A6">
+              <v-card class="mx-auto" width="30%" elevation="2" color="#DAF7A6">
                 <br />
                 <v-container fluid>
                   <v-row>
@@ -243,9 +250,6 @@
                       </v-row>
                       <v-row align="center" justify="center" length v-if="!homeQuarantinePublic">
                         <h3 style="color: red; padding: 10px"><strong>校方未公開</strong></h3>
-                      </v-row>
-                      <v-row align="center" justify="center" length>
-                        <h3>{{ cdc_data_tidy.newestConfirmedCaseDate }}</h3>
                       </v-row>
                       <v-row align="center" justify="center" length>
                         <h3>居家檢疫</h3>
@@ -324,7 +328,7 @@ export default {
         'newestConfirmedCaseTaipei': 'N/A',
         'newestConfirmedCaseSanxia': 'N/A',
         'newestConfirmedCaseUndefined': 'N/A',
-        'newestConfirmedCaseDate': '',
+        'newestConfirmedCaseDate': 'N/A',
         'isolateTotal': 'N/A',
         'selfHealthManagementTotal': 'N/A',
         'homeQuarantineTotal': 'N/A',
@@ -436,7 +440,7 @@ export default {
         chartDataTmp.push(tmp_today_confirmedCase)
         addDataTmp += tmp_today_confirmedCase;
         chartDataTmp.push(addDataTmp)
-        
+
         this.chartData.push(chartDataTmp)
         
         tmp_cdc_data_tidy.confirmedCase += this.cdc_data[i].confirmedCase.studentTotal;
