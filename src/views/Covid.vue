@@ -29,7 +29,7 @@
           <v-col cols="12">
             <v-row align="center" justify="center" length>
 
-              <v-card class="mx-auto" width="50%" elevation="2">
+              <v-card class="mx-auto" width="33%" elevation="2">
                 <br />
                 <v-container fluid>
                   <v-row>
@@ -46,7 +46,7 @@
                 <br />
               </v-card>
 
-              <v-card class="mx-auto" width="50%" elevation="2">
+              <v-card class="mx-auto" width="33%" elevation="2">
                 <br />
                 <v-container fluid>
                   <v-row>
@@ -56,6 +56,23 @@
                       </v-row>
                       <v-row align="center" justify="center" length>
                         <h3>臺北</h3>
+                      </v-row>
+                    </v-col>
+                  </v-row>
+                </v-container>
+                <br />
+              </v-card>
+
+              <v-card class="mx-auto" width="34%" elevation="2">
+                <br />
+                <v-container fluid>
+                  <v-row>
+                    <v-col cols="12">
+                      <v-row align="center" justify="center" length>
+                        <h1>+{{ cdc_data_tidy.newestConfirmedCaseUndefined }}</h1>
+                      </v-row>
+                      <v-row align="center" justify="center" length>
+                        <h3>未定義</h3>
                       </v-row>
                     </v-col>
                   </v-row>
@@ -96,7 +113,7 @@
           <v-col cols="12">
             <v-row align="center" justify="center" length>
 
-              <v-card class="mx-auto" width="50%" elevation="2">
+              <v-card class="mx-auto" width="33%" elevation="2">
                 <br />
                 <v-container fluid>
                   <v-row>
@@ -113,7 +130,7 @@
                 <br />
               </v-card>
 
-              <v-card class="mx-auto" width="50%" elevation="2">
+              <v-card class="mx-auto" width="33%" elevation="2">
                 <br />
                 <v-container fluid>
                   <v-row>
@@ -123,6 +140,23 @@
                       </v-row>
                       <v-row align="center" justify="center" length>
                         <h3>臺北</h3>
+                      </v-row>
+                    </v-col>
+                  </v-row>
+                </v-container>
+                <br />
+              </v-card>
+
+              <v-card class="mx-auto" width="34%" elevation="2">
+                <br />
+                <v-container fluid>
+                  <v-row>
+                    <v-col cols="12">
+                      <v-row align="center" justify="center" length>
+                        <h1>{{ cdc_data_tidy.confirmedCaseUndefined }}</h1>
+                      </v-row>
+                      <v-row align="center" justify="center" length>
+                        <h3>未定義</h3>
                       </v-row>
                     </v-col>
                   </v-row>
@@ -156,7 +190,7 @@
           <v-col cols="12">
             <v-row align="center" justify="center" length>
 
-              <v-card class="mx-auto" width="50%" elevation="2" color="#76D1F7">
+              <v-card class="mx-auto" width="33%" elevation="2" color="#DAF7A6">
                 <br />
                 <v-container fluid>
                   <v-row>
@@ -176,7 +210,7 @@
                 <br />
               </v-card>
 
-              <v-card class="mx-auto" width="50%" elevation="2" color="#DAF7A6">
+              <v-card class="mx-auto" width="34%" elevation="2" color="#DAF7A6">
                 <br />
                 <v-container fluid>
                   <v-row>
@@ -192,6 +226,29 @@
                       </v-row>
                       <v-row align="center" justify="center" length>
                         <h3>自主健康管理</h3>
+                      </v-row>
+                    </v-col>
+                  </v-row>
+                </v-container>
+                <br />
+              </v-card>
+
+              <v-card class="mx-auto" width="33%" elevation="2" color="#DAF7A6">
+                <br />
+                <v-container fluid>
+                  <v-row>
+                    <v-col cols="12">
+                      <v-row align="center" justify="center" length v-if="homeQuarantinePublic">
+                        <h1>{{ cdc_data_tidy.homeQuarantineTotal }}</h1>
+                      </v-row>
+                      <v-row align="center" justify="center" length v-if="!homeQuarantinePublic">
+                        <h3 style="color: red; padding: 10px"><strong>校方未公開</strong></h3>
+                      </v-row>
+                      <v-row align="center" justify="center" length>
+                        <h3>{{ cdc_data_tidy.newestConfirmedCaseDate }}</h3>
+                      </v-row>
+                      <v-row align="center" justify="center" length>
+                        <h3>居家檢疫</h3>
                       </v-row>
                     </v-col>
                   </v-row>
@@ -237,9 +294,11 @@ export default {
       cdc_data: [],
       headers: [
         { text: '時間', value: 'date', align: 'center' },
-        { text: '確診', value: 'confirmedCase.total', align: 'center' },
-        { text: '確診 - 臺北', value: 'confirmedCase.zoneDetail.Taipei', align: 'center' },
-        { text: '確診 - 三峽', value: 'confirmedCase.zoneDetail.Sanxia', align: 'center' },
+        { text: '確診 - 學生', value: 'confirmedCase.studentTotal', align: 'center' },
+        { text: '確診 - 學生 - 臺北', value: 'confirmedCase.studentZoneDetail.Taipei', align: 'center' },
+        { text: '確診 - 學生 - 三峽', value: 'confirmedCase.studentZoneDetail.Sanxia', align: 'center' },
+        { text: '確診 - 老師', value: 'confirmedCase.teacher', align: 'center' },
+        { text: '確診 - 職員', value: 'confirmedCase.staff', align: 'center' },
         { text: '居家隔離 - 學生', value: 'isolate.studentTotal', align: 'center' },
         { text: '居家隔離 - 學生 - 臺北', value: 'isolate.studentZoneDetail.Taipei', align: 'center' },
         { text: '居家隔離 - 學生 - 三峽', value: 'isolate.studentZoneDetail.Sanxia', align: 'center' },
@@ -250,17 +309,25 @@ export default {
         { text: '自主健康管理 - 學生 - 三峽', value: 'selfHealthManagement.studentZoneDetail.Sanxia', align: 'center' },
         { text: '自主健康管理 - 老師', value: 'selfHealthManagement.teacher', align: 'center' },
         { text: '自主健康管理 - 職員', value: 'selfHealthManagement.staff', align: 'center' },
+        { text: '居家檢疫 - 學生', value: 'homeQuarantine.studentTotal', align: 'center' },
+        { text: '居家檢疫 - 學生 - 臺北', value: 'homeQuarantine.studentZoneDetail.Taipei', align: 'center' },
+        { text: '居家檢疫 - 學生 - 三峽', value: 'homeQuarantine.studentZoneDetail.Sanxia', align: 'center' },
+        { text: '居家檢疫 - 老師', value: 'homeQuarantine.teacher', align: 'center' },
+        { text: '居家檢疫 - 職員', value: 'homeQuarantine.staff', align: 'center' },
       ],
       cdc_data_tidy: {
         'confirmedCase': 'N/A',
         'confirmedCaseTaipei': 'N/A',
         'confirmedCaseSanxia': 'N/A',
+        'confirmedCaseUndefined': 'N/A',
         'newestConfirmedCase': 'N/A',
         'newestConfirmedCaseTaipei': 'N/A',
         'newestConfirmedCaseSanxia': 'N/A',
+        'newestConfirmedCaseUndefined': 'N/A',
         'newestConfirmedCaseDate': '',
         'isolateTotal': 'N/A',
         'selfHealthManagementTotal': 'N/A',
+        'homeQuarantineTotal': 'N/A',
       },
       chartData: [],
       chartOptions: {
@@ -269,7 +336,8 @@ export default {
           subtitle: '',
         }
       },
-      selfHealthManagementPublic: true
+      selfHealthManagementPublic: true,
+      homeQuarantinePublic: true,
     };
   },
   methods: {
@@ -298,20 +366,34 @@ export default {
         'confirmedCase': 0,
         'confirmedCaseTaipei': 0,
         'confirmedCaseSanxia': 0,
+        'confirmedCaseUndefined': 0,
         'newestConfirmedCase': 0,
         'newestConfirmedCaseTaipei': 0,
         'newestConfirmedCaseSanxia': 0,
+        'newestConfirmedCaseUndefined': 0,
         'newestConfirmedCaseDate': '',
         'isolateTotal': 0,
         'selfHealthManagementTotal': 0,
+        'homeQuarantineTotal': 0,
       }
       this.cdc_graph_list = []
       this.chartData = [["日期", "確診", "確診累積"]]
       
       tmp_cdc_data_tidy.newestConfirmedCaseDate = this.cdc_data[0].date;
-      tmp_cdc_data_tidy.newestConfirmedCase = this.cdc_data[0].confirmedCase.total;
-      tmp_cdc_data_tidy.newestConfirmedCaseTaipei = this.cdc_data[0].confirmedCase.zoneDetail.Taipei;
-      tmp_cdc_data_tidy.newestConfirmedCaseSanxia = this.cdc_data[0].confirmedCase.zoneDetail.Sanxia;
+
+      tmp_cdc_data_tidy.newestConfirmedCase = this.cdc_data[0].confirmedCase.studentTotal;
+
+      if (this.cdc_data[0].confirmedCase.teacher != "校方未公開")
+        tmp_cdc_data_tidy.newestConfirmedCase += this.cdc_data[0].confirmedCase.teacher;
+      if (this.cdc_data[0].confirmedCase.staff != "校方未公開")
+        tmp_cdc_data_tidy.newestConfirmedCase += this.cdc_data[0].confirmedCase.staff;
+
+      tmp_cdc_data_tidy.newestConfirmedCaseTaipei = this.cdc_data[0].confirmedCase.studentZoneDetail.Taipei;
+      tmp_cdc_data_tidy.newestConfirmedCaseSanxia = this.cdc_data[0].confirmedCase.studentZoneDetail.Sanxia;
+      if (this.cdc_data[0].confirmedCase.teacher != "校方未公開")
+        tmp_cdc_data_tidy.newestConfirmedCaseUndefined += this.cdc_data[0].confirmedCase.teacher;
+      if (this.cdc_data[0].confirmedCase.staff != "校方未公開")
+        tmp_cdc_data_tidy.newestConfirmedCaseUndefined += this.cdc_data[0].confirmedCase.staff;
       
       tmp_cdc_data_tidy.isolateTotal += this.cdc_data[0].isolate.studentTotal;
       tmp_cdc_data_tidy.isolateTotal += this.cdc_data[0].isolate.teacher;
@@ -329,18 +411,47 @@ export default {
       if (this.cdc_data[0].selfHealthManagement.studentTotal === "校方未公開" && this.cdc_data[0].selfHealthManagement.teacher === "校方未公開" && this.cdc_data[0].selfHealthManagement.staff === "校方未公開")
         this.selfHealthManagementPublic = false;
 
+      if (this.cdc_data[0].homeQuarantine.studentTotal != "校方未公開") {
+        tmp_cdc_data_tidy.homeQuarantineTotal += this.cdc_data[0].homeQuarantine.studentTotal;
+      }
+      if (this.cdc_data[0].homeQuarantine.teacher != "校方未公開") {
+        tmp_cdc_data_tidy.homeQuarantineTotal += this.cdc_data[0].homeQuarantine.teacher;
+      }
+      if (this.cdc_data[0].homeQuarantine.staff != "校方未公開") {
+        tmp_cdc_data_tidy.homeQuarantineTotal += this.cdc_data[0].homeQuarantine.staff;
+      }
+      if (this.cdc_data[0].homeQuarantine.studentTotal === "校方未公開" && this.cdc_data[0].homeQuarantine.teacher === "校方未公開" && this.cdc_data[0].homeQuarantine.staff === "校方未公開")
+        this.homeQuarantinePublic = false;
+
       var addDataTmp = 0;
       for (var i=this.cdc_data.length-1;i>=0;i--) {
         var chartDataTmp = []
         chartDataTmp.push(this.cdc_data[i].date);
-        chartDataTmp.push(this.cdc_data[i].confirmedCase.total)
-        addDataTmp += this.cdc_data[i].confirmedCase.total;
+        var tmp_today_confirmedCase = 0;
+        tmp_today_confirmedCase += this.cdc_data[i].confirmedCase.studentTotal;
+        if (this.cdc_data[i].confirmedCase.teacher != "校方未公開")
+          tmp_today_confirmedCase += this.cdc_data[i].confirmedCase.teacher;
+        if (this.cdc_data[i].confirmedCase.staff != "校方未公開")
+          tmp_today_confirmedCase += this.cdc_data[i].confirmedCase.staff;
+        chartDataTmp.push(tmp_today_confirmedCase)
+        addDataTmp += tmp_today_confirmedCase;
         chartDataTmp.push(addDataTmp)
+        
         this.chartData.push(chartDataTmp)
         
-        tmp_cdc_data_tidy.confirmedCase += this.cdc_data[i].confirmedCase.total;
-        tmp_cdc_data_tidy.confirmedCaseTaipei += this.cdc_data[i].confirmedCase.zoneDetail.Taipei;
-        tmp_cdc_data_tidy.confirmedCaseSanxia += this.cdc_data[i].confirmedCase.zoneDetail.Sanxia;
+        tmp_cdc_data_tidy.confirmedCase += this.cdc_data[i].confirmedCase.studentTotal;
+        if (this.cdc_data[i].confirmedCase.teacher != "校方未公開")
+          tmp_cdc_data_tidy.confirmedCase += this.cdc_data[i].confirmedCase.teacher;
+        if (this.cdc_data[i].confirmedCase.staff != "校方未公開")
+          tmp_cdc_data_tidy.confirmedCase += this.cdc_data[i].confirmedCase.staff;
+
+        tmp_cdc_data_tidy.confirmedCaseTaipei += this.cdc_data[i].confirmedCase.studentZoneDetail.Taipei;
+        tmp_cdc_data_tidy.confirmedCaseSanxia += this.cdc_data[i].confirmedCase.studentZoneDetail.Sanxia;
+
+        if (this.cdc_data[i].confirmedCase.teacher != "校方未公開")
+          tmp_cdc_data_tidy.confirmedCaseUndefined += this.cdc_data[i].confirmedCase.teacher;
+        if (this.cdc_data[i].confirmedCase.staff != "校方未公開")
+          tmp_cdc_data_tidy.confirmedCaseUndefined += this.cdc_data[i].confirmedCase.staff;
       }
 
       this.cdc_data_tidy = tmp_cdc_data_tidy
