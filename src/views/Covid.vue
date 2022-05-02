@@ -1,6 +1,20 @@
 <template>
   <div class="home">
     <br />
+
+    <v-container fluid>
+      <v-row>
+        <v-col cols="12">
+          <v-row align="center" justify="center" length>
+            <v-alert dense outlined type="error">
+              <strong>警告！</strong>
+              目前資料為當日公告確診數加總，由於行政單位說法不一，本資料僅供參考。另一說法為未痊癒人數，但此會導致數據沒有價值，且根據當下校內狀況，研判為當日確診數，因此校方正式公告前，仍會採用當日加總作為統計。
+            </v-alert>
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-container>
+
     <h1>Covid-19 @NTPU</h1>
     <h5>Data from: <a href="http://lms.ntpu.edu.tw/board.php?courseID=50180&f=news" target="_bland">北大防疫專區</a> （資料依校方公告為主）</h5>
     <h4 style="color: red">{{ data_loading }}</h4>
