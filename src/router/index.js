@@ -29,6 +29,22 @@ const routes = [
     },
   },
   {
+    path: '/covid/list',
+    name: 'Covid',
+    component: () => import('../views/CovidList.vue'),
+    meta:{
+      title: 'NTPU Tool - Covid-19',
+    },
+  },
+  {
+    path: '/covid/api',
+    name: 'Covid',
+    component: () => import('../views/CovidApi.vue'),
+    meta:{
+      title: 'NTPU Tool - Covid-19',
+    },
+  },
+  {
     path: '/TaiwanSocialDistancing',
     name: 'Taiwan Social Distancing',
     component: () => import('../views/TaiwanSocialDistancing.vue'),

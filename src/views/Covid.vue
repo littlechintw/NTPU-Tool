@@ -2,24 +2,7 @@
   <div class="home">
     <br />
 
-    <v-container fluid>
-      <v-row>
-        <v-col cols="12">
-          <v-row align="center" justify="center" length>
-            <v-alert dense outlined type="error">
-              <strong>嚴重警告！</strong>
-              目前資料依照 2022/05/02 <strong>原先發佈（數據遭修改前）</strong>之格式發佈，目前不使用累加確診數的方式，但目前公布之數據與前項發生衝突，<strong>資料缺乏正確性</strong>，請自行斟酌校方提供資料，所有內容皆已完全顯示於最下方列表，可參考檢視。
-            </v-alert>
-          </v-row>
-          <v-row align="center" justify="center" length>
-            <v-alert dense outlined type="error">
-              <strong>嚴重警告！</strong>
-              由於校方公布之數據在公布過後又突然刪減資訊，目前無法正確得知計算方式，且行政單位說法不一，無法正確判斷所有資料狀況，請謹慎運用此資料。
-            </v-alert>
-          </v-row>
-        </v-col>
-      </v-row>
-    </v-container>
+    <covidAlert />
 
     <h1>Covid-19 @NTPU</h1>
     <h5>Data from: <a href="http://lms.ntpu.edu.tw/board.php?courseID=50180&f=news" target="_bland">北大防疫專區</a> （資料依校方公告為主）</h5>
@@ -315,57 +298,53 @@
     <!-- <v-card width="80%" height="150px" color="red">
       <h1>{{ cdc_data_tidy.confirmedCase }}</h1>
     </v-card> -->
-    <h2>List of data</h2>
-    <br />
-    <v-data-table
-      :headers="headers"
-      :items="cdc_data"
-      :items-per-page="5"
-      class="elevation-1"
-    ></v-data-table>
+    <v-card class="mx-auto" width="100%" elevation="0">
+      <v-container fluid>
+        <v-row>
+          <v-col cols="12">
+            <v-row align="center" justify="center" length>
+              <h2>更多</h2>
+            </v-row>
+            <v-row align="center" justify="center" length>
+              <br />
+            </v-row>
+            <v-row align="center" justify="center" length>
+              <v-btn
+                elevation="2"
+                outlined
+                href="covid/list"
+              >
+                資料列表
+              </v-btn>
+              <div style="padding: 5px" />
+              <v-btn
+                elevation="2"
+                outlined
+                href="covid/api"
+              >
+                API 串接
+              </v-btn>
+            </v-row>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-card>
     <br />
   </div>
 </template>
 
 <script>
-
+import covidAlert from '@/components/covidAlert.vue'
 
 export default {
   name: "HomeView",
   components: {
+    covidAlert
   },
   data() {
     return {
       data_loading: "Loading data...",
       cdc_data: [],
-      headers: [
-        { text: '時間', value: 'date', align: 'center' },
-        { text: '新增確診 - 學生', value: 'confirmedToday.studentTotal', align: 'center' },
-        { text: '新增確診 - 學生 - 臺北', value: 'confirmedToday.studentZoneDetail.Taipei', align: 'center' },
-        { text: '新增確診 - 學生 - 三峽', value: 'confirmedToday.studentZoneDetail.Sanxia', align: 'center' },
-        { text: '新增確診 - 老師', value: 'confirmedToday.teacher', align: 'center' },
-        { text: '新增確診 - 職員', value: 'confirmedToday.staff', align: 'center' },
-        { text: '確診 - 學生', value: 'confirmedCase.studentTotal', align: 'center' },
-        { text: '確診 - 學生 - 臺北', value: 'confirmedCase.studentZoneDetail.Taipei', align: 'center' },
-        { text: '確診 - 學生 - 三峽', value: 'confirmedCase.studentZoneDetail.Sanxia', align: 'center' },
-        { text: '確診 - 老師', value: 'confirmedCase.teacher', align: 'center' },
-        { text: '確診 - 職員', value: 'confirmedCase.staff', align: 'center' },
-        { text: '居家隔離 - 學生', value: 'isolate.studentTotal', align: 'center' },
-        { text: '居家隔離 - 學生 - 臺北', value: 'isolate.studentZoneDetail.Taipei', align: 'center' },
-        { text: '居家隔離 - 學生 - 三峽', value: 'isolate.studentZoneDetail.Sanxia', align: 'center' },
-        { text: '居家隔離 - 老師', value: 'isolate.teacher', align: 'center' },
-        { text: '居家隔離 - 職員', value: 'isolate.staff', align: 'center' },
-        { text: '自主健康管理 - 學生	', value: 'selfHealthManagement.studentTotal', align: 'center' },
-        { text: '自主健康管理 - 學生 - 臺北', value: 'selfHealthManagement.studentZoneDetail.Taipei', align: 'center' },
-        { text: '自主健康管理 - 學生 - 三峽', value: 'selfHealthManagement.studentZoneDetail.Sanxia', align: 'center' },
-        { text: '自主健康管理 - 老師', value: 'selfHealthManagement.teacher', align: 'center' },
-        { text: '自主健康管理 - 職員', value: 'selfHealthManagement.staff', align: 'center' },
-        { text: '居家檢疫 - 學生', value: 'homeQuarantine.studentTotal', align: 'center' },
-        { text: '居家檢疫 - 學生 - 臺北', value: 'homeQuarantine.studentZoneDetail.Taipei', align: 'center' },
-        { text: '居家檢疫 - 學生 - 三峽', value: 'homeQuarantine.studentZoneDetail.Sanxia', align: 'center' },
-        { text: '居家檢疫 - 老師', value: 'homeQuarantine.teacher', align: 'center' },
-        { text: '居家檢疫 - 職員', value: 'homeQuarantine.staff', align: 'center' },
-      ],
       cdc_data_tidy: {
         'confirmedCase': 'N/A',
         'confirmedCaseTaipei': 'N/A',

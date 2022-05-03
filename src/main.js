@@ -28,6 +28,10 @@ Vue.use(VueAnalytics, {
 import VueGoogleCharts from 'vue-google-charts'
 Vue.use(VueGoogleCharts)
 
+// json-viewer
+import JsonViewer from 'vue-json-viewer'
+Vue.use(JsonViewer)
+
 // axios
 import axios from 'axios'
 Vue.prototype.$axios = axios
