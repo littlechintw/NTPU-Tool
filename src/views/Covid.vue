@@ -340,7 +340,11 @@ export default {
       cdc_data: [],
       headers: [
         { text: '時間', value: 'date', align: 'center' },
-        { text: '新增確診', value: 'confirmedToday', align: 'center' },
+        { text: '新增確診 - 學生', value: 'confirmedToday.studentTotal', align: 'center' },
+        { text: '新增確診 - 學生 - 臺北', value: 'confirmedToday.studentZoneDetail.Taipei', align: 'center' },
+        { text: '新增確診 - 學生 - 三峽', value: 'confirmedToday.studentZoneDetail.Sanxia', align: 'center' },
+        { text: '新增確診 - 老師', value: 'confirmedToday.teacher', align: 'center' },
+        { text: '新增確診 - 職員', value: 'confirmedToday.staff', align: 'center' },
         { text: '確診 - 學生', value: 'confirmedCase.studentTotal', align: 'center' },
         { text: '確診 - 學生 - 臺北', value: 'confirmedCase.studentZoneDetail.Taipei', align: 'center' },
         { text: '確診 - 學生 - 三峽', value: 'confirmedCase.studentZoneDetail.Sanxia', align: 'center' },
@@ -428,7 +432,13 @@ export default {
       
       tmp_cdc_data_tidy.newestConfirmedCaseDate = this.cdc_data[0].date;
 
-      tmp_cdc_data_tidy.newestConfirmedCase = this.cdc_data[0].confirmedToday;
+      // tmp_cdc_data_tidy.newestConfirmedCase = this.cdc_data[0].confirmedToday;
+      if (this.cdc_data[0].confirmedToday.studentTotal != "校方未公開")
+        tmp_cdc_data_tidy.newestConfirmedCase += this.cdc_data[0].confirmedToday.studentTotal;
+      if (this.cdc_data[0].confirmedToday.teacher != "校方未公開")
+        tmp_cdc_data_tidy.newestConfirmedCase += this.cdc_data[0].confirmedToday.teacher;
+      if (this.cdc_data[0].confirmedToday.staff != "校方未公開")
+        tmp_cdc_data_tidy.newestConfirmedCase += this.cdc_data[0].confirmedToday.staff;
 
       // if (this.cdc_data[0].confirmedCase.teacher != "校方未公開")
       //   tmp_cdc_data_tidy.newestConfirmedCase += this.cdc_data[0].confirmedCase.teacher;
