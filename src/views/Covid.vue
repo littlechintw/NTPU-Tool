@@ -19,7 +19,7 @@
               <h0>+{{ cdc_data_tidy.newestConfirmedCase }}</h0>
             </v-row>
             <v-row align="center" justify="center" length>
-              <h4>{{ cdc_data_tidy.newestConfirmedCaseDate }} 確診人數</h4>
+              <h4>{{ cdc_data_tidy.newestConfirmedCaseDate }} 新增確診人數</h4>
             </v-row>
           </v-col>
         </v-row>
@@ -100,7 +100,10 @@
               <h0>{{ cdc_data_tidy.confirmedCase }}</h0>
             </v-row>
             <v-row align="center" justify="center" length>
-              <h4>{{ cdc_data_tidy.newestConfirmedCaseDate }} 公告確診</h4>
+              <h4>{{ cdc_data_tidy.newestConfirmedCaseDate }} 公告尚未痊癒確診</h4>
+            </v-row>
+            <v-row align="center" justify="center" length>
+              <h4 style="color: red">本數據非累積確診數量</h4>
             </v-row>
           </v-col>
         </v-row>
