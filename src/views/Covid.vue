@@ -174,12 +174,17 @@
     </v-card>
 
     <br />
+    <v-divider />
+    <br />
+    <h3>最近七日數據線性圖</h3>
+    <br />
 
     <v-card class="mx-auto" width="80%">
       <GChart
         type="LineChart"
         :data="chartData"
         :options="chartOptions"
+        style="height: 400px"
       />
     </v-card>
 
@@ -363,6 +368,7 @@ export default {
         'homeQuarantineTotal': 'N/A',
       },
       chartData: [],
+      tmpChartData: [],
       chartOptions: {
         chart: {
           title: 'COVID-19 確診數',
@@ -375,7 +381,6 @@ export default {
   },
   methods: {
     get_dorm_status() {
-      // const api = "http://34.145.73.14:5000/api/ntpu_cdc";
       const api = "https://script.google.com/macros/s/AKfycbxZTWjZU1T-Ro0BQW5NLi8ewFSCNxv2NJTLoLpTXNmdMT0fXSCD9k6BeRY0Y8UrBnFN9g/exec";
       this.$axios
         .get(api)
@@ -410,7 +415,7 @@ export default {
         'homeQuarantineTotal': 0,
       }
       this.cdc_graph_list = []
-      this.chartData = [["日期", "確診"]]
+      this.tmpChartData = [["日期", "確診", "隔離", "自主健康管理", "居檢"]]
       
       tmp_cdc_data_tidy.newestConfirmedCaseDate = this.cdc_data[0].date;
 
@@ -479,7 +484,46 @@ export default {
 
       // var addDataTmp = 0;
       for (var i=this.cdc_data.length-1;i>=0;i--) {
-        this.chartData.push([this.cdc_data[i].date, this.cdc_data[i].confirmedCase.studentTotal]);
+        var confirmedCase = 0
+        var isolateTotal = 0
+        var selfHealthManagementTotal = 0
+        var homeQuarantineTotal = 0
+
+        if (this.cdc_data[i].confirmedCase.studentTotal != "校方未公開")
+          confirmedCase += this.cdc_data[i].confirmedCase.studentTotal;
+        if (this.cdc_data[i].confirmedCase.teacher != "校方未公開")
+          confirmedCase += this.cdc_data[i].confirmedCase.teacher;
+        if (this.cdc_data[i].confirmedCase.staff != "校方未公開")
+          confirmedCase += this.cdc_data[i].confirmedCase.staff;
+
+        if (this.cdc_data[i].isolate.studentTotal != "校方未公開")
+          isolateTotal += this.cdc_data[i].isolate.studentTotal;
+        if (this.cdc_data[i].isolate.teacher != "校方未公開")
+          isolateTotal += this.cdc_data[i].isolate.teacher;
+        if (this.cdc_data[i].isolate.staff != "校方未公開")
+          isolateTotal += this.cdc_data[i].isolate.staff;
+
+        if (this.cdc_data[i].selfHealthManagement.studentTotal != "校方未公開")
+          selfHealthManagementTotal += this.cdc_data[i].selfHealthManagement.studentTotal;
+        if (this.cdc_data[i].selfHealthManagement.teacher != "校方未公開")
+          selfHealthManagementTotal += this.cdc_data[i].selfHealthManagement.teacher;
+        if (this.cdc_data[i].selfHealthManagement.staff != "校方未公開")
+          selfHealthManagementTotal += this.cdc_data[i].selfHealthManagement.staff;
+
+        if (this.cdc_data[i].homeQuarantine.studentTotal != "校方未公開")
+          homeQuarantineTotal += this.cdc_data[0].homeQuarantine.studentTotal;
+        if (this.cdc_data[i].homeQuarantine.teacher != "校方未公開")
+          homeQuarantineTotal += this.cdc_data[0].homeQuarantine.teacher;
+        if (this.cdc_data[i].homeQuarantine.staff != "校方未公開")
+          homeQuarantineTotal += this.cdc_data[0].homeQuarantine.staff;
+          
+        this.tmpChartData.push([ 
+                              this.cdc_data[i].date,
+                              confirmedCase,
+                              isolateTotal,
+                              selfHealthManagementTotal,
+                              homeQuarantineTotal
+                            ]);
         // var chartDataTmp = []
         // chartDataTmp.push(this.cdc_data[i].date);
         // var tmp_today_confirmedCase = 0;
@@ -510,7 +554,18 @@ export default {
       }
 
       this.cdc_data_tidy = tmp_cdc_data_tidy
+      this.chartData = this.getChartDataNum(7);
     },
+    getChartDataNum(num) {
+      var res = []
+      var tmp = []
+      res.push(this.tmpChartData[0])
+      for (var i=this.tmpChartData.length-1, j=0;j<num;i--,j++)
+        tmp.push(this.tmpChartData[i])
+      for (i=tmp.length-1;i>=0;i--)
+        res.push(tmp[i])
+      return res
+    }
   },
   created: function () {
     this.get_dorm_status()
