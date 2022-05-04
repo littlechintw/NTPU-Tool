@@ -7,7 +7,7 @@
           <v-row align="center" justify="center" length>
             <v-alert dense outlined>
               <strong>公告！</strong>
-              從現在開始，您可以參訪 <a href="../covid">防疫數據</a> 頁面，查看最新北大防疫數據。
+              從現在開始，您可以參訪 <a href="/covid">防疫數據</a> 頁面，查看最新北大防疫數據。
             </v-alert>
             <v-alert dense outlined type="error">
               <strong>警告！</strong>
