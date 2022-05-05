@@ -415,7 +415,7 @@ export default {
         'homeQuarantineTotal': 0,
       }
       this.cdc_graph_list = []
-      this.tmpChartData = [["日期", "確診", "隔離", "自主健康管理", "居檢"]]
+      this.tmpChartData = [["日期", "未痊癒確診", "隔離", "自主健康管理", "居檢"]]
       
       tmp_cdc_data_tidy.newestConfirmedCaseDate = this.cdc_data[0].date;
 
