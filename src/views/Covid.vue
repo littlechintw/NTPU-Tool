@@ -100,7 +100,7 @@
               <h0>{{ cdc_data_tidy.confirmedCase }}</h0>
             </v-row>
             <v-row align="center" justify="center" length>
-              <h4>{{ cdc_data_tidy.newestConfirmedCaseDate }} 公告尚未痊癒確診</h4>
+              <h4>{{ cdc_data_tidy.newestConfirmedCaseDate }} 未痊癒確診</h4>
             </v-row>
             <v-row align="center" justify="center" length>
               <h4 style="color: red">本數據非累積確診數量</h4>
@@ -370,10 +370,7 @@ export default {
       chartData: [],
       tmpChartData: [],
       chartOptions: {
-        chart: {
-          title: 'COVID-19 確診數',
-          subtitle: '',
-        }
+        legend: { position: 'bottom' },
       },
       selfHealthManagementPublic: true,
       homeQuarantinePublic: true,
@@ -415,7 +412,7 @@ export default {
         'homeQuarantineTotal': 0,
       }
       this.cdc_graph_list = []
-      this.tmpChartData = [["日期", "未痊癒確診", "隔離", "自主健康管理", "居檢"]]
+      this.tmpChartData = [["日期", "未痊癒確診", "新增確診", "隔離"]]
       
       tmp_cdc_data_tidy.newestConfirmedCaseDate = this.cdc_data[0].date;
 
@@ -485,9 +482,10 @@ export default {
       // var addDataTmp = 0;
       for (var i=this.cdc_data.length-1;i>=0;i--) {
         var confirmedCase = 0
+        var confirmedCaseToday = 0;
         var isolateTotal = 0
-        var selfHealthManagementTotal = 0
-        var homeQuarantineTotal = 0
+        // var selfHealthManagementTotal = 0
+        // var homeQuarantineTotal = 0
 
         if (this.cdc_data[i].confirmedCase.studentTotal != "校方未公開")
           confirmedCase += this.cdc_data[i].confirmedCase.studentTotal;
@@ -496,6 +494,13 @@ export default {
         if (this.cdc_data[i].confirmedCase.staff != "校方未公開")
           confirmedCase += this.cdc_data[i].confirmedCase.staff;
 
+        if (this.cdc_data[i].confirmedToday.studentTotal != "校方未公開")
+          confirmedCaseToday += this.cdc_data[i].confirmedToday.studentTotal;
+        if (this.cdc_data[i].confirmedToday.teacher != "校方未公開")
+          confirmedCaseToday += this.cdc_data[i].confirmedToday.teacher;
+        if (this.cdc_data[i].confirmedToday.staff != "校方未公開")
+          confirmedCaseToday += this.cdc_data[i].confirmedToday.staff;
+
         if (this.cdc_data[i].isolate.studentTotal != "校方未公開")
           isolateTotal += this.cdc_data[i].isolate.studentTotal;
         if (this.cdc_data[i].isolate.teacher != "校方未公開")
@@ -503,26 +508,25 @@ export default {
         if (this.cdc_data[i].isolate.staff != "校方未公開")
           isolateTotal += this.cdc_data[i].isolate.staff;
 
-        if (this.cdc_data[i].selfHealthManagement.studentTotal != "校方未公開")
-          selfHealthManagementTotal += this.cdc_data[i].selfHealthManagement.studentTotal;
-        if (this.cdc_data[i].selfHealthManagement.teacher != "校方未公開")
-          selfHealthManagementTotal += this.cdc_data[i].selfHealthManagement.teacher;
-        if (this.cdc_data[i].selfHealthManagement.staff != "校方未公開")
-          selfHealthManagementTotal += this.cdc_data[i].selfHealthManagement.staff;
+        // if (this.cdc_data[i].selfHealthManagement.studentTotal != "校方未公開")
+        //   selfHealthManagementTotal += this.cdc_data[i].selfHealthManagement.studentTotal;
+        // if (this.cdc_data[i].selfHealthManagement.teacher != "校方未公開")
+        //   selfHealthManagementTotal += this.cdc_data[i].selfHealthManagement.teacher;
+        // if (this.cdc_data[i].selfHealthManagement.staff != "校方未公開")
+        //   selfHealthManagementTotal += this.cdc_data[i].selfHealthManagement.staff;
 
-        if (this.cdc_data[i].homeQuarantine.studentTotal != "校方未公開")
-          homeQuarantineTotal += this.cdc_data[0].homeQuarantine.studentTotal;
-        if (this.cdc_data[i].homeQuarantine.teacher != "校方未公開")
-          homeQuarantineTotal += this.cdc_data[0].homeQuarantine.teacher;
-        if (this.cdc_data[i].homeQuarantine.staff != "校方未公開")
-          homeQuarantineTotal += this.cdc_data[0].homeQuarantine.staff;
+        // if (this.cdc_data[i].homeQuarantine.studentTotal != "校方未公開")
+        //   homeQuarantineTotal += this.cdc_data[0].homeQuarantine.studentTotal;
+        // if (this.cdc_data[i].homeQuarantine.teacher != "校方未公開")
+        //   homeQuarantineTotal += this.cdc_data[0].homeQuarantine.teacher;
+        // if (this.cdc_data[i].homeQuarantine.staff != "校方未公開")
+        //   homeQuarantineTotal += this.cdc_data[0].homeQuarantine.staff;
           
         this.tmpChartData.push([ 
                               this.cdc_data[i].date,
                               confirmedCase,
+                              confirmedCaseToday,
                               isolateTotal,
-                              selfHealthManagementTotal,
-                              homeQuarantineTotal
                             ]);
         // var chartDataTmp = []
         // chartDataTmp.push(this.cdc_data[i].date);
