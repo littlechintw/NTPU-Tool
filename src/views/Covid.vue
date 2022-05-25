@@ -5,7 +5,15 @@
     <covidAlert />
 
     <h1>Covid-19 @NTPU</h1>
-    <h5>Data from: <a href="http://lms.ntpu.edu.tw/board.php?courseID=50180&f=news" target="_bland">北大防疫專區</a> （資料依校方公告為主）</h5>
+    <h5>
+      Data from:
+      <a
+        href="http://lms.ntpu.edu.tw/board.php?courseID=50180&f=news"
+        target="_bland"
+        >北大防疫專區</a
+      >
+      （資料依校方公告為主）
+    </h5>
     <h4 style="color: red">{{ data_loading }}</h4>
     <v-divider />
     <br />
@@ -115,7 +123,6 @@
         <v-row>
           <v-col cols="12">
             <v-row align="center" justify="center" length>
-
               <v-card class="mx-auto" width="33%" elevation="2">
                 <br />
                 <v-container fluid>
@@ -166,7 +173,6 @@
                 </v-container>
                 <br />
               </v-card>
-
             </v-row>
           </v-col>
         </v-row>
@@ -176,7 +182,7 @@
     <br />
     <v-divider />
     <br />
-    <h3>最近七日數據線性圖</h3>
+    <h3>最近三十日數據線性圖</h3>
     <br />
 
     <v-card class="mx-auto" width="80%">
@@ -192,7 +198,6 @@
     <v-divider />
     <br />
 
-
     <v-card class="mx-auto" width="80%" elevation="0">
       <v-container fluid>
         <v-row>
@@ -204,13 +209,22 @@
               <br />
             </v-row>
             <v-row align="center" justify="center" length>
-              <h3> 居家隔離 <strong>{{ cdc_data_tidy.isolateTotal }}</strong> 人</h3>
+              <h3>
+                居家隔離 <strong>{{ cdc_data_tidy.isolateTotal }}</strong> 人
+              </h3>
             </v-row>
             <v-row align="center" justify="center" length>
-              <h3> 自主健康管理 <strong>{{ cdc_data_tidy.selfHealthManagementTotal }}</strong> 人</h3>
+              <h3>
+                自主健康管理
+                <strong>{{ cdc_data_tidy.selfHealthManagementTotal }}</strong>
+                人
+              </h3>
             </v-row>
             <v-row align="center" justify="center" length>
-              <h3> 居家檢疫 <strong>{{ cdc_data_tidy.homeQuarantineTotal }}</strong> 人</h3>
+              <h3>
+                居家檢疫
+                <strong>{{ cdc_data_tidy.homeQuarantineTotal }}</strong> 人
+              </h3>
             </v-row>
           </v-col>
         </v-row>
@@ -317,21 +331,9 @@
               <br />
             </v-row>
             <v-row align="center" justify="center" length>
-              <v-btn
-                elevation="2"
-                outlined
-                href="covid/list"
-              >
-                資料列表
-              </v-btn>
+              <v-btn elevation="2" outlined href="covid/list"> 資料列表 </v-btn>
               <div style="padding: 5px" />
-              <v-btn
-                elevation="2"
-                outlined
-                href="covid/api"
-              >
-                API 串接
-              </v-btn>
+              <v-btn elevation="2" outlined href="covid/api"> API 串接 </v-btn>
             </v-row>
           </v-col>
         </v-row>
@@ -342,35 +344,35 @@
 </template>
 
 <script>
-import covidAlert from '@/components/covidAlert.vue'
+import covidAlert from "@/components/covidAlert.vue";
 
 export default {
   name: "HomeView",
   components: {
-    covidAlert
+    covidAlert,
   },
   data() {
     return {
       data_loading: "Loading data...",
       cdc_data: [],
       cdc_data_tidy: {
-        'confirmedCase': 'N/A',
-        'confirmedCaseTaipei': 'N/A',
-        'confirmedCaseSanxia': 'N/A',
-        'confirmedCaseUndefined': 'N/A',
-        'newestConfirmedCase': 'N/A',
-        'newestConfirmedCaseTaipei': 'N/A',
-        'newestConfirmedCaseSanxia': 'N/A',
-        'newestConfirmedCaseUndefined': 'N/A',
-        'newestConfirmedCaseDate': 'N/A',
-        'isolateTotal': 'N/A',
-        'selfHealthManagementTotal': 'N/A',
-        'homeQuarantineTotal': 'N/A',
+        confirmedCase: "N/A",
+        confirmedCaseTaipei: "N/A",
+        confirmedCaseSanxia: "N/A",
+        confirmedCaseUndefined: "N/A",
+        newestConfirmedCase: "N/A",
+        newestConfirmedCaseTaipei: "N/A",
+        newestConfirmedCaseSanxia: "N/A",
+        newestConfirmedCaseUndefined: "N/A",
+        newestConfirmedCaseDate: "N/A",
+        isolateTotal: "N/A",
+        selfHealthManagementTotal: "N/A",
+        homeQuarantineTotal: "N/A",
       },
       chartData: [],
       tmpChartData: [],
       chartOptions: {
-        legend: { position: 'bottom' },
+        legend: { position: "bottom" },
       },
       selfHealthManagementPublic: true,
       homeQuarantinePublic: true,
@@ -378,7 +380,8 @@ export default {
   },
   methods: {
     get_dorm_status() {
-      const api = "https://script.google.com/macros/s/AKfycbxZTWjZU1T-Ro0BQW5NLi8ewFSCNxv2NJTLoLpTXNmdMT0fXSCD9k6BeRY0Y8UrBnFN9g/exec";
+      const api =
+        "https://script.google.com/macros/s/AKfycbxZTWjZU1T-Ro0BQW5NLi8ewFSCNxv2NJTLoLpTXNmdMT0fXSCD9k6BeRY0Y8UrBnFN9g/exec";
       this.$axios
         .get(api)
         .then((resp) => {
@@ -389,7 +392,7 @@ export default {
           // const updateTimestamp = Date.parse(this.cdc_data[0].dataTimestamp) + (8*60*60*1000);
           const updateTimestamp = new Date(this.cdc_data[0].dataTimestamp);
           this.data_loading = "Updated: " + updateTimestamp;
-          this.tidy_cdc_data()
+          this.tidy_cdc_data();
         })
         .catch((err) => {
           console.log(err);
@@ -398,31 +401,34 @@ export default {
     },
     tidy_cdc_data() {
       var tmp_cdc_data_tidy = {
-        'confirmedCase': 0,
-        'confirmedCaseTaipei': 0,
-        'confirmedCaseSanxia': 0,
-        'confirmedCaseUndefined': 0,
-        'newestConfirmedCase': 0,
-        'newestConfirmedCaseTaipei': 0,
-        'newestConfirmedCaseSanxia': 0,
-        'newestConfirmedCaseUndefined': 0,
-        'newestConfirmedCaseDate': '',
-        'isolateTotal': 0,
-        'selfHealthManagementTotal': 0,
-        'homeQuarantineTotal': 0,
-      }
-      this.cdc_graph_list = []
-      this.tmpChartData = [["日期", "未痊癒確診", "新增確診", "隔離"]]
-      
+        confirmedCase: 0,
+        confirmedCaseTaipei: 0,
+        confirmedCaseSanxia: 0,
+        confirmedCaseUndefined: 0,
+        newestConfirmedCase: 0,
+        newestConfirmedCaseTaipei: 0,
+        newestConfirmedCaseSanxia: 0,
+        newestConfirmedCaseUndefined: 0,
+        newestConfirmedCaseDate: "",
+        isolateTotal: 0,
+        selfHealthManagementTotal: 0,
+        homeQuarantineTotal: 0,
+      };
+      this.cdc_graph_list = [];
+      this.tmpChartData = [["日期", "未痊癒確診", "隔離", "新增確診"]];
+
       tmp_cdc_data_tidy.newestConfirmedCaseDate = this.cdc_data[0].date;
 
       // tmp_cdc_data_tidy.newestConfirmedCase = this.cdc_data[0].confirmedToday;
       if (this.cdc_data[0].confirmedToday.studentTotal != "校方未公開")
-        tmp_cdc_data_tidy.newestConfirmedCase += this.cdc_data[0].confirmedToday.studentTotal;
+        tmp_cdc_data_tidy.newestConfirmedCase +=
+          this.cdc_data[0].confirmedToday.studentTotal;
       if (this.cdc_data[0].confirmedToday.teacher != "校方未公開")
-        tmp_cdc_data_tidy.newestConfirmedCase += this.cdc_data[0].confirmedToday.teacher;
+        tmp_cdc_data_tidy.newestConfirmedCase +=
+          this.cdc_data[0].confirmedToday.teacher;
       if (this.cdc_data[0].confirmedToday.staff != "校方未公開")
-        tmp_cdc_data_tidy.newestConfirmedCase += this.cdc_data[0].confirmedToday.staff;
+        tmp_cdc_data_tidy.newestConfirmedCase +=
+          this.cdc_data[0].confirmedToday.staff;
 
       // if (this.cdc_data[0].confirmedCase.teacher != "校方未公開")
       //   tmp_cdc_data_tidy.newestConfirmedCase += this.cdc_data[0].confirmedCase.teacher;
@@ -435,55 +441,75 @@ export default {
       //   tmp_cdc_data_tidy.newestConfirmedCaseUndefined += this.cdc_data[0].confirmedCase.teacher;
       // if (this.cdc_data[0].confirmedCase.staff != "校方未公開")
       //   tmp_cdc_data_tidy.newestConfirmedCaseUndefined += this.cdc_data[0].confirmedCase.staff;
-      
+
       tmp_cdc_data_tidy.isolateTotal += this.cdc_data[0].isolate.studentTotal;
       tmp_cdc_data_tidy.isolateTotal += this.cdc_data[0].isolate.teacher;
       tmp_cdc_data_tidy.isolateTotal += this.cdc_data[0].isolate.staff;
 
-      tmp_cdc_data_tidy.confirmedCase = this.cdc_data[0].confirmedCase.studentTotal;
-      tmp_cdc_data_tidy.confirmedCaseTaipei = this.cdc_data[0].confirmedCase.studentZoneDetail.Taipei;
-      tmp_cdc_data_tidy.confirmedCaseSanxia = this.cdc_data[0].confirmedCase.studentZoneDetail.Sanxia;
+      tmp_cdc_data_tidy.confirmedCase =
+        this.cdc_data[0].confirmedCase.studentTotal;
+      tmp_cdc_data_tidy.confirmedCaseTaipei =
+        this.cdc_data[0].confirmedCase.studentZoneDetail.Taipei;
+      tmp_cdc_data_tidy.confirmedCaseSanxia =
+        this.cdc_data[0].confirmedCase.studentZoneDetail.Sanxia;
       // tmp_cdc_data_tidy.confirmedCaseUndefined += this.cdc_data[0].confirmedCase.teacher + this.cdc_data[0].confirmedCase.staff;
       if (this.cdc_data[0].confirmedCase.teacher != "校方未公開") {
-        tmp_cdc_data_tidy.confirmedCaseUndefined += this.cdc_data[0].confirmedCase.teacher;
-        tmp_cdc_data_tidy.confirmedCase += this.cdc_data[0].confirmedCase.teacher;
+        tmp_cdc_data_tidy.confirmedCaseUndefined +=
+          this.cdc_data[0].confirmedCase.teacher;
+        tmp_cdc_data_tidy.confirmedCase +=
+          this.cdc_data[0].confirmedCase.teacher;
       }
       if (this.cdc_data[0].confirmedCase.staff != "校方未公開") {
-        tmp_cdc_data_tidy.confirmedCaseUndefined += this.cdc_data[0].confirmedCase.staff;
+        tmp_cdc_data_tidy.confirmedCaseUndefined +=
+          this.cdc_data[0].confirmedCase.staff;
         tmp_cdc_data_tidy.confirmedCase += this.cdc_data[0].confirmedCase.staff;
       }
-      
+
       if (this.cdc_data[0].selfHealthManagement.studentTotal != "校方未公開") {
-        tmp_cdc_data_tidy.selfHealthManagementTotal += this.cdc_data[0].selfHealthManagement.studentTotal;
+        tmp_cdc_data_tidy.selfHealthManagementTotal +=
+          this.cdc_data[0].selfHealthManagement.studentTotal;
       }
       if (this.cdc_data[0].selfHealthManagement.teacher != "校方未公開") {
-        tmp_cdc_data_tidy.selfHealthManagementTotal += this.cdc_data[0].selfHealthManagement.teacher;
+        tmp_cdc_data_tidy.selfHealthManagementTotal +=
+          this.cdc_data[0].selfHealthManagement.teacher;
       }
       if (this.cdc_data[0].selfHealthManagement.staff != "校方未公開") {
-        tmp_cdc_data_tidy.selfHealthManagementTotal += this.cdc_data[0].selfHealthManagement.staff;
+        tmp_cdc_data_tidy.selfHealthManagementTotal +=
+          this.cdc_data[0].selfHealthManagement.staff;
       }
-      if (this.cdc_data[0].selfHealthManagement.studentTotal === "校方未公開" && this.cdc_data[0].selfHealthManagement.teacher === "校方未公開" && this.cdc_data[0].selfHealthManagement.staff === "校方未公開")
+      if (
+        this.cdc_data[0].selfHealthManagement.studentTotal === "校方未公開" &&
+        this.cdc_data[0].selfHealthManagement.teacher === "校方未公開" &&
+        this.cdc_data[0].selfHealthManagement.staff === "校方未公開"
+      )
         // this.selfHealthManagementPublic = false;
         tmp_cdc_data_tidy.selfHealthManagementTotal = "校方未公開";
 
       if (this.cdc_data[0].homeQuarantine.studentTotal != "校方未公開") {
-        tmp_cdc_data_tidy.homeQuarantineTotal += this.cdc_data[0].homeQuarantine.studentTotal;
+        tmp_cdc_data_tidy.homeQuarantineTotal +=
+          this.cdc_data[0].homeQuarantine.studentTotal;
       }
       if (this.cdc_data[0].homeQuarantine.teacher != "校方未公開") {
-        tmp_cdc_data_tidy.homeQuarantineTotal += this.cdc_data[0].homeQuarantine.teacher;
+        tmp_cdc_data_tidy.homeQuarantineTotal +=
+          this.cdc_data[0].homeQuarantine.teacher;
       }
       if (this.cdc_data[0].homeQuarantine.staff != "校方未公開") {
-        tmp_cdc_data_tidy.homeQuarantineTotal += this.cdc_data[0].homeQuarantine.staff;
+        tmp_cdc_data_tidy.homeQuarantineTotal +=
+          this.cdc_data[0].homeQuarantine.staff;
       }
-      if (this.cdc_data[0].homeQuarantine.studentTotal === "校方未公開" && this.cdc_data[0].homeQuarantine.teacher === "校方未公開" && this.cdc_data[0].homeQuarantine.staff === "校方未公開")
+      if (
+        this.cdc_data[0].homeQuarantine.studentTotal === "校方未公開" &&
+        this.cdc_data[0].homeQuarantine.teacher === "校方未公開" &&
+        this.cdc_data[0].homeQuarantine.staff === "校方未公開"
+      )
         // this.homeQuarantinePublic = false;
         tmp_cdc_data_tidy.homeQuarantineTotal = "校方未公開";
 
       // var addDataTmp = 0;
-      for (var i=this.cdc_data.length-1;i>=0;i--) {
-        var confirmedCase = 0
+      for (var i = this.cdc_data.length - 1; i >= 0; i--) {
+        var confirmedCase = 0;
         var confirmedCaseToday = 0;
-        var isolateTotal = 0
+        var isolateTotal = 0;
         // var selfHealthManagementTotal = 0
         // var homeQuarantineTotal = 0
 
@@ -521,13 +547,13 @@ export default {
         //   homeQuarantineTotal += this.cdc_data[0].homeQuarantine.teacher;
         // if (this.cdc_data[i].homeQuarantine.staff != "校方未公開")
         //   homeQuarantineTotal += this.cdc_data[0].homeQuarantine.staff;
-          
-        this.tmpChartData.push([ 
-                              this.cdc_data[i].date,
-                              confirmedCase,
-                              confirmedCaseToday,
-                              isolateTotal,
-                            ]);
+
+        this.tmpChartData.push([
+          this.cdc_data[i].date,
+          confirmedCase,
+          isolateTotal,
+          confirmedCaseToday,
+        ]);
         // var chartDataTmp = []
         // chartDataTmp.push(this.cdc_data[i].date);
         // var tmp_today_confirmedCase = 0;
@@ -541,7 +567,7 @@ export default {
         // chartDataTmp.push(addDataTmp)
 
         // this.chartData.push(chartDataTmp)
-        
+
         // tmp_cdc_data_tidy.confirmedCase += this.cdc_data[i].confirmedCase.studentTotal;
         // if (this.cdc_data[i].confirmedCase.teacher != "校方未公開")
         //   tmp_cdc_data_tidy.confirmedCase += this.cdc_data[i].confirmedCase.teacher;
@@ -557,22 +583,21 @@ export default {
         //   tmp_cdc_data_tidy.confirmedCaseUndefined += this.cdc_data[i].confirmedCase.staff;
       }
 
-      this.cdc_data_tidy = tmp_cdc_data_tidy
-      this.chartData = this.getChartDataNum(7);
+      this.cdc_data_tidy = tmp_cdc_data_tidy;
+      this.chartData = this.getChartDataNum(30);
     },
     getChartDataNum(num) {
-      var res = []
-      var tmp = []
-      res.push(this.tmpChartData[0])
-      for (var i=this.tmpChartData.length-1, j=0;j<num;i--,j++)
-        tmp.push(this.tmpChartData[i])
-      for (i=tmp.length-1;i>=0;i--)
-        res.push(tmp[i])
-      return res
-    }
+      var res = [];
+      var tmp = [];
+      res.push(this.tmpChartData[0]);
+      for (var i = this.tmpChartData.length - 1, j = 0; j < num; i--, j++)
+        tmp.push(this.tmpChartData[i]);
+      for (i = tmp.length - 1; i >= 0; i--) res.push(tmp[i]);
+      return res;
+    },
   },
   created: function () {
-    this.get_dorm_status()
+    this.get_dorm_status();
   },
 };
 </script>
