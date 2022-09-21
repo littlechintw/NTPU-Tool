@@ -22,7 +22,7 @@
     "vue-qrcode": "^1.0.1",
     "vue-qrcode-component": "^2.1.1",
     "vue-router": "^3.5.1",
-    "vuetify": "^2.6.0",
+    "vuetify": "^2.6.10",
     "vuex": "^3.6.2"
   },
   "devDependencies": {
